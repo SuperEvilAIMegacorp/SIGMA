@@ -1,0 +1,266 @@
+game_id: "flux_zones_001"
+name: "Flux Zones"
+category: "grid_game"
+
+# ============================================================================
+# STATE SPACE DEFINITION
+# ============================================================================
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal_and_diagonal"
+    coordinates: "A1-E5"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "flux_charge"
+          type: "integer"
+          range: "0-8"
+          computed: true
+          description: "Number of friendly markers in adjacent cells (orthogonal + diagonal)"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+    starting_player: "red"
+
+# ============================================================================
+# FORMAL RULE DEFINITIONS
+# ============================================================================
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      priority: 1
+      condition: "cell is empty AND (board is empty OR cell is orthogonally adjacent to own marker)"
+      action: "place marker on cell"
+      effect: "marker added to board, all flux charges recalculated"
+      exceptions: []
+
+    - id: "R_PLACE_2"
+      priority: 2
+      condition: "board is empty (first move of game)"
+      action: "place marker anywhere"
+      effect: "first marker placed"
+      exceptions: []
+
+  flux_calculation:
+    - id: "R_FLUX_1"
+      priority: 1
+      condition: "marker exists on board"
+      action: "compute flux_charge"
+      effect: "flux_charge = count of friendly markers in 8 adjacent cells"
+      exceptions: []
+      notes: "Recalculated after every placement"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      priority: 1
+      condition: "enemy markers are orthogonally adjacent AND flux_charge_self >= flux_charge_enemy + 2"
+      action: "capture enemy marker"
+      effect: "remove enemy marker from board, recalculate all flux charges"
+      exceptions: []
+
+    - id: "R_CAPTURE_2"
+      priority: 2
+      condition: "multiple enemy markers adjacent, each with flux_charge_enemy < flux_charge_self - 1"
+      action: "capture ALL qualifying enemy markers simultaneously"
+      effect: "remove all captured markers, recalculate flux"
+      exceptions: []
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no markers on board"
+      priority: 1
+
+    - id: "WIN_2"
+      condition: "opponent has markers but no legal placement moves"
+      priority: 2
+
+# ============================================================================
+# RULE INTERACTIONS
+# ============================================================================
+interactions:
+  - rules: ["R_PLACE_1", "R_FLUX_1"]
+    type: "enabling"
+    description: "Placement triggers flux recalculation for all markers"
+
+  - rules: ["R_FLUX_1", "R_CAPTURE_1"]
+    type: "enabling"
+    description: "Flux charge determines capture eligibility"
+
+  - rules: ["R_CAPTURE_1", "R_FLUX_1"]
+    type: "cascading"
+    description: "Captures change flux charges which may trigger more captures"
+
+  - rules: ["R_PLACE_1", "R_CAPTURE_1"]
+    type: "sequential"
+    description: "Placement happens first, then captures are resolved"
+
+# ============================================================================
+# NATURAL LANGUAGE DESCRIPTION
+# ============================================================================
+description: |
+  Flux Zones is a 2-player abstract strategy game played on a 5x5 grid. Players
+  alternate placing colored markers (red and blue) on empty cells. Each marker
+  has a "flux charge" equal to the number of friendly markers surrounding it
+  (counting all 8 adjacent cells - orthogonal and diagonal).
+
+  When a marker is placed, if any enemy markers are orthogonally adjacent (not
+  diagonal) and have a flux charge at least 2 points lower, those enemy markers
+  are captured and removed from the board. Removing markers changes flux charges,
+  which can trigger cascade captures.
+
+  The first marker can be placed anywhere. After that, markers must be placed
+  orthogonally adjacent to your own existing markers. Victory comes from
+  capturing all enemy markers or blocking the opponent from having any legal moves.
+
+rule_explanations:
+  - rule_id: "R_PLACE_1"
+    natural_language: "After the first move, you can only place markers on empty cells that share an edge (not corner) with one of your existing markers."
+    examples:
+      - scenario: "Red marker at C3, empty cells at C2, C4, B3, D3"
+        legal: true
+        reason: "All four cells share an edge with C3"
+      - scenario: "Red marker at C3, empty cell at B2"
+        legal: false
+        reason: "B2 only touches C3 diagonally, not orthogonally"
+
+  - rule_id: "R_PLACE_2"
+    natural_language: "On the very first turn of the game, red can place their first marker on any empty cell."
+    examples:
+      - scenario: "Empty board, red places at E5 (corner)"
+        legal: true
+        reason: "First move can go anywhere"
+
+  - rule_id: "R_FLUX_1"
+    natural_language: "A marker's flux charge is the count of friendly markers in all 8 surrounding cells (including diagonals). This is recalculated after every placement and capture."
+    examples:
+      - scenario: "Red marker at C3 with red markers at B2, B3, C2 (three friendly neighbors)"
+        flux_charge: 3
+        reason: "Three friendly markers in the 8 adjacent cells"
+      - scenario: "Red marker at A1 with red marker at A2 and B1 (two friendly neighbors)"
+        flux_charge: 2
+        reason: "Corner position limits maximum neighbors"
+
+  - rule_id: "R_CAPTURE_1"
+    natural_language: "After placing a marker, check all enemy markers orthogonally adjacent (not diagonal). If your new marker has flux charge ≥ enemy flux charge + 2, capture that enemy marker."
+    examples:
+      - scenario: "Red places at D3 with flux 4, blue at D4 with flux 1"
+        captures: true
+        reason: "4 >= 1 + 2, so blue marker is captured"
+      - scenario: "Red places at D3 with flux 4, blue at D4 with flux 3"
+        captures: false
+        reason: "4 < 3 + 2, difference is only 1"
+      - scenario: "Red places at D3 with flux 4, blue at C2 with flux 0"
+        captures: false
+        reason: "C2 is diagonal, not orthogonally adjacent"
+
+  - rule_id: "R_CAPTURE_2"
+    natural_language: "If multiple enemy markers are orthogonally adjacent and ALL have flux charge at least 2 lower, capture all of them simultaneously."
+    examples:
+      - scenario: "Red places at C3 with flux 5, blue at C2 (flux 2), C4 (flux 1), B3 (flux 3)"
+        captures: ["C2", "C4"]
+        reason: "C2: 5 >= 2+2 ✓, C4: 5 >= 1+2 ✓, B3: 5 < 3+2 ✗"
+
+# ============================================================================
+# EDGE CASES
+# ============================================================================
+edge_cases:
+  - scenario: "Cascade capture"
+    question: "If capturing a marker changes flux charges, can that trigger new captures?"
+    answer: "No. Captures are resolved once per placement. The flux changes from captures don't trigger additional captures until the next turn."
+    involved_rules: ["R_CAPTURE_1", "R_FLUX_1"]
+
+  - scenario: "Simultaneous blocking"
+    question: "Can you place a marker that would be captured immediately by an adjacent enemy?"
+    answer: "Yes, placement happens first, then your captures are checked. If you'd be captured, that happens after your own captures are resolved. However, you still need to place adjacent to your own marker, and if you're placing into capture range, you better capture something first."
+    involved_rules: ["R_PLACE_1", "R_CAPTURE_1"]
+
+  - scenario: "Board edge flux"
+    question: "Does a marker at the board edge have lower maximum flux?"
+    answer: "Yes. An A1 corner marker has max flux of 3 (only 3 adjacent cells exist). An A3 edge marker has max flux of 5 (only 5 adjacent cells exist). A C3 center marker has max flux of 8."
+    involved_rules: ["R_FLUX_1"]
+
+  - scenario: "No legal moves"
+    question: "What if all empty cells adjacent to your markers are already occupied?"
+    answer: "You lose - this is a win condition for your opponent."
+    involved_rules: ["R_PLACE_1", "WIN_2"]
+
+  - scenario: "Self-isolation"
+    question: "Can you place a marker that has no friendly neighbors?"
+    answer: "Only on the first turn. After that, you MUST place adjacent to existing markers, so every new marker has flux ≥ 1."
+    involved_rules: ["R_PLACE_1", "R_PLACE_2", "R_FLUX_1"]
+
+# ============================================================================
+# EXAMPLE STATES
+# ============================================================================
+example_states:
+  - state_id: "initial"
+    description: "Game start - empty board"
+    board: |
+      5 [ ][ ][ ][ ][ ]
+      4 [ ][ ][ ][ ][ ]
+      3 [ ][ ][ ][ ][ ]
+      2 [ ][ ][ ][ ][ ]
+      1 [ ][ ][ ][ ][ ]
+         A  B  C  D  E
+
+  - state_id: "opening"
+    description: "After 3 moves - R:C3, B:C4, R:D3"
+    board: |
+      5 [ ][ ][ ][ ][ ]
+      4 [ ][ ][B1][ ][ ]
+      3 [ ][ ][R1][R2][ ]
+      2 [ ][ ][ ][ ][ ]
+      1 [ ][ ][ ][ ][ ]
+         A  B  C  D  E
+    notes: |
+      R1@C3 has flux 1 (adjacent to R2@D3)
+      B1@C4 has flux 0 (no adjacent blue)
+      R2@D3 has flux 1 (adjacent to R1@C3)
+      R2 is orthogonally adjacent to B1 but flux 1 < 0+2, no capture
+
+  - state_id: "capture_setup"
+    description: "Red about to capture - R:C3,D3,B3,C2; B:C4"
+    board: |
+      5 [ ][ ][ ][ ][ ]
+      4 [ ][ ][B0][ ][ ]
+      3 [ ][R2][R3][R1][ ]
+      2 [ ][ ][R1][ ][ ]
+      1 [ ][ ][ ][ ][ ]
+         A  B  C  D  E
+    notes: |
+      R@C3 has flux 3 (adjacent to R@B3, R@D3, R@C2)
+      B@C4 has flux 0 (no adjacent blue)
+      If Red places at C5, R@C5 will have flux 1 (adjacent to R@C3)
+      But more importantly, R@C3 flux will increase to 4
+      Then R@C3 (flux 4) captures B@C4 (flux 0) because 4 >= 0+2
+
+# ============================================================================
+# INDUCTION DIFFICULTY METRICS
+# ============================================================================
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+challenge_notes: |
+  - Flux calculation includes diagonals but captures check orthogonal - not obvious
+  - Cascade effects (placement -> flux change -> capture) require multi-step reasoning
+  - The ">= charge + 2" threshold is hard to infer from few examples
+  - Edge/corner positions have different flux potential - hidden constraint
+  - Placement adjacency is orthogonal-only while flux counts all 8 neighbors
+
+minimal_scenarios_to_infer: 15-20
+
+key_insights_needed:
+  - "Placement must be orthogonally adjacent (not diagonal)"
+  - "Flux counts all 8 neighbors (orthogonal + diagonal)"
+  - "Capture checks only orthogonal neighbors (not diagonal)"
+  - "Capture requires flux difference of exactly 2 or more"
+  - "First move exemption from adjacency rule"
+  - "Board edges limit maximum flux values"
