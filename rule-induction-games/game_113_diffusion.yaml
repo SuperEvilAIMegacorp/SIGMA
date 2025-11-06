@@ -1,0 +1,20 @@
+game_id: "diffusion_113"
+name: "Diffusion"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Place concentration source (emits 10 units/turn)"
+  - id: "R2"
+    action: "Concentration diffuses to adjacent cells (rate proportional to gradient)"
+  - id: "R3"
+    action: "Cells reaching concentration 20+: convert to your color"
+  - id: "R4"
+    action: "Enemy concentrations compete (subtract from each other)"
+  - id: "R5"
+    action: "Sources can be moved (costs 3 turns)"
+
+win:
+  condition: "Control 18+ cells via diffusion"
+
+minimal_scenarios: 15-18

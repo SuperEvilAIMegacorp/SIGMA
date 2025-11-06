@@ -1,0 +1,22 @@
+game_id: "topology_shift_112"
+name: "Topology Shift"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Board can be planar, cylindrical, or toroidal"
+  - id: "R2"
+    action: "Players vote each turn to change topology"
+  - id: "R3"
+    action: "Cylindrical: left/right edges connect"
+  - id: "R4"
+    action: "Toroidal: all edges connect (wrap-around)"
+  - id: "R5"
+    action: "Paths valid in one topology may disconnect in another"
+  - id: "R6"
+    action: "Markers disconnected from main group: captured"
+
+win:
+  condition: "Isolate all enemy markers via topology change"
+
+minimal_scenarios: 19-23

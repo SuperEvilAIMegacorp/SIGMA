@@ -1,0 +1,20 @@
+game_id: "fractal_accumulation_193"
+name: "Fractal Accumulation"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines fractal patterns + compound growth + constraint satisfaction"
+  - id: "R2"
+    action: "Self-similar structures accumulate bonuses exponentially"
+  - id: "R3"
+    action: "Each fractal level has constraints (must satisfy pattern)"
+  - id: "R4"
+    action: "Growth rate = fractal_depth × base_rate"
+  - id: "R5"
+    action: "Breaking pattern: cascading collapse"
+
+win:
+  condition: "Build depth-4 fractal with 50+ accumulated value"
+
+minimal_scenarios: 25-30

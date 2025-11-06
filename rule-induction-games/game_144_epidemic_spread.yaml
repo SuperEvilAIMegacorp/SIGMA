@@ -1,0 +1,20 @@
+game_id: "epidemic_spread_144"
+name: "Epidemic Spread"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "SIR model: Susceptible → Infected → Recovered"
+  - id: "R2"
+    action: "Infection spreads along edges (probability β per contact)"
+  - id: "R3"
+    action: "Recovery rate γ (infected becomes recovered after time)"
+  - id: "R4"
+    action: "R0 = β/γ determines outbreak size"
+  - id: "R5"
+    action: "Vaccination: make nodes immune before infection"
+
+win:
+  condition: "Infect 70% of enemy nodes or vaccinate to prevent epidemic"
+
+minimal_scenarios: 18-22

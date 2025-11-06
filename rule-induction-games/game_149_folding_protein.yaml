@@ -1,0 +1,20 @@
+game_id: "folding_protein_149"
+name: "Folding Protein"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Amino acids fold into 3D structure"
+  - id: "R2"
+    action: "Hydrophobic residues cluster inside"
+  - id: "R3"
+    action: "Hydrophilic residues stay outside"
+  - id: "R4"
+    action: "Correct fold: protein active (gains function)"
+  - id: "R5"
+    action: "Misfolding: protein aggregates (toxic)"
+
+win:
+  condition: "Successfully fold 5 proteins"
+
+minimal_scenarios: 17-21

@@ -1,0 +1,20 @@
+game_id: "legacy_bonus_178"
+name: "Legacy Bonus"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Destroying pieces leaves legacy (ghost bonus)"
+  - id: "R2"
+    action: "Legacy value = piece's accumulated experience"
+  - id: "R3"
+    action: "New pieces inherit % of legacy bonus"
+  - id: "R4"
+    action: "Multiple legacies stack"
+  - id: "R5"
+    action: "Generations: later pieces benefit from all ancestors"
+
+win:
+  condition: "Create piece with 50+ inherited legacy"
+
+minimal_scenarios: 16-20

@@ -1,0 +1,20 @@
+game_id: "neural_network_119"
+name: "Neural Network"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers are neurons with activation level (0-10)"
+  - id: "R2"
+    action: "Connected neurons propagate signal (activation spreads)"
+  - id: "R3"
+    action: "Activation = weighted sum of inputs (connections have weights 1-3)"
+  - id: "R4"
+    action: "Neurons with activation > 7: fire (send signal to all connections)"
+  - id: "R5"
+    action: "Creating cascade (5+ neurons fire): captures enemy neurons in cascade"
+
+win:
+  condition: "Build network that fires cascade 3 times"
+
+minimal_scenarios: 19-24

@@ -1,0 +1,20 @@
+game_id: "futoshiki_186"
+name: "Futoshiki"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Fill grid with numbers 1-5 (each once per row/column)"
+  - id: "R2"
+    action: "Inequality constraints between cells (< or >)"
+  - id: "R3"
+    action: "All constraints must be satisfied"
+  - id: "R4"
+    action: "Opponent places constraints to make it harder"
+  - id: "R5"
+    action: "Complete puzzle: unique solution required"
+
+win:
+  condition: "Solve 5x5 Futoshiki puzzle"
+
+minimal_scenarios: 16-20

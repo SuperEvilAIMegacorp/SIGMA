@@ -1,0 +1,20 @@
+game_id: "pressure_zones_116"
+name: "Pressure Zones"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Cells have pressure (0-10)"
+  - id: "R2"
+    action: "Placing marker increases pressure in 3x3 area (+2 center, +1 adjacent)"
+  - id: "R3"
+    action: "High pressure (8+): markers move outward automatically"
+  - id: "R4"
+    action: "Low pressure (2-): markers pull inward"
+  - id: "R5"
+    action: "Pressure equalizes over time (diffuses)"
+
+win:
+  condition: "Push all enemies off board using pressure"
+
+minimal_scenarios: 16-19

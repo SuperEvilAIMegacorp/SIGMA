@@ -1,0 +1,20 @@
+game_id: "hibernation_109"
+name: "Hibernation"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers can enter hibernation (dormant, cannot move/be captured)"
+  - id: "R2"
+    action: "Hibernating marker accumulates energy (+1/turn)"
+  - id: "R3"
+    action: "Wake with 5+ energy: power = energy value"
+  - id: "R4"
+    action: "Powered markers capture enemies with power < self"
+  - id: "R5"
+    action: "Using power costs energy (1 power per action)"
+
+win:
+  condition: "Capture 10 enemies using stored power"
+
+minimal_scenarios: 13-16

@@ -1,0 +1,20 @@
+game_id: "volcanic_magma_152"
+name: "Volcanic Magma"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Magma chambers fill with pressure"
+  - id: "R2"
+    action: "Pressure > threshold: eruption"
+  - id: "R3"
+    action: "Lava flows downhill, cools to rock"
+  - id: "R4"
+    action: "Rock formations block future flows"
+  - id: "R5"
+    action: "Gas content affects explosiveness"
+
+win:
+  condition: "Create volcanic island (15 cooled rocks)"
+
+minimal_scenarios: 15-18

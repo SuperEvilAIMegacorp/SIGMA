@@ -1,0 +1,22 @@
+game_id: "chemical_bonds_117"
+name: "Chemical Bonds"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers are atoms with valence (1-4 bonding sites)"
+  - id: "R2"
+    action: "Adjacent atoms form bonds (share electrons)"
+  - id: "R3"
+    action: "Filled valence: stable (cannot be broken)"
+  - id: "R4"
+    action: "Partial bonds: can be broken by enemy placement"
+  - id: "R5"
+    action: "Molecules (bonded groups) move as unit"
+  - id: "R6"
+    action: "Creating large molecule (5+ atoms): scores points"
+
+win:
+  condition: "Build molecule with 10+ atoms or score 30 points"
+
+minimal_scenarios: 17-21

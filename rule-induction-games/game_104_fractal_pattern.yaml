@@ -1,0 +1,20 @@
+game_id: "fractal_pattern_104"
+name: "Fractal Pattern"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Place marker creates pattern that repeats at smaller scales"
+  - id: "R2"
+    action: "3x3 pattern replicates in each cell of that pattern"
+  - id: "R3"
+    action: "Self-similar patterns score exponentially (2^depth)"
+  - id: "R4"
+    action: "Breaking opponent's fractal captures entire fractal"
+  - id: "R5"
+    action: "Max fractal depth = 3"
+
+win:
+  condition: "Create depth-3 fractal or score 30 points"
+
+minimal_scenarios: 19-24

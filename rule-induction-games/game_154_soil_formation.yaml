@@ -1,0 +1,20 @@
+game_id: "soil_formation_154"
+name: "Soil Formation"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Weathering: rock → regolith → soil"
+  - id: "R2"
+    action: "Organic matter accumulates (O horizon)"
+  - id: "R3"
+    action: "Leaching moves nutrients downward"
+  - id: "R4"
+    action: "Soil profiles develop layers (O-A-B-C)"
+  - id: "R5"
+    action: "Mature soil takes 1000 years (10 turns)"
+
+win:
+  condition: "Develop mature soil profile with all horizons"
+
+minimal_scenarios: 16-20

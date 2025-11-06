@@ -1,0 +1,20 @@
+game_id: "stochastic_graph_136"
+name: "Stochastic Graph"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Edges have probability (0.0-1.0)"
+  - id: "R2"
+    action: "Path reliability = product of edge probabilities"
+  - id: "R3"
+    action: "High reliability paths (>0.8): secure (can use for transport)"
+  - id: "R4"
+    action: "Low reliability (<0.3): path may fail randomly"
+  - id: "R5"
+    action: "Reinforcing edge: increase probability (+0.1 per turn)"
+
+win:
+  condition: "Build reliable path (>0.9) connecting opposite ends"
+
+minimal_scenarios: 16-20

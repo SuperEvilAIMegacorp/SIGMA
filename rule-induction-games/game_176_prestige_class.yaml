@@ -1,0 +1,20 @@
+game_id: "prestige_class_176"
+name: "Prestige Class"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Earn prestige points through achievements"
+  - id: "R2"
+    action: "Prestige tiers: Bronze (10), Silver (30), Gold (60), Platinum (100)"
+  - id: "R3"
+    action: "Each tier unlocks exclusive abilities"
+  - id: "R4"
+    action: "Higher tiers: stronger abilities + all lower tier abilities"
+  - id: "R5"
+    action: "Prestige never decreases (permanent progression)"
+
+win:
+  condition: "Reach Platinum tier"
+
+minimal_scenarios: 16-20

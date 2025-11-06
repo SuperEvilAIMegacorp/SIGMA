@@ -1,0 +1,20 @@
+game_id: "living_machine_199"
+name: "Living Machine"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines chemical bonds + metamorphosis + self-replication + emergent"
+  - id: "R2"
+    action: "Molecular machines that catalyze their own creation"
+  - id: "R3"
+    action: "Evolution through mutation + selection"
+  - id: "R4"
+    action: "Metabolism: consume resources, excrete waste"
+  - id: "R5"
+    action: "Reproduction creates variation (not exact copies)"
+
+win:
+  condition: "Create self-sustaining artificial life (reproduces 3 generations)"
+
+minimal_scenarios: 27-34

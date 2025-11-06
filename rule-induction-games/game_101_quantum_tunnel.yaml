@@ -1,0 +1,66 @@
+game_id: "quantum_tunnel_101"
+name: "Quantum Tunnel"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "6x6"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "tunnel_probability"
+          type: "float"
+          range: "0.0-1.0"
+          description: "Chance to tunnel through obstacles"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker with tunnel_probability = 0.5"
+
+  tunneling:
+    - id: "R_TUNNEL_1"
+      condition: "marker blocked by enemy"
+      action: "roll probability, if success, tunnel through to cell beyond"
+      effect: "bypass obstacles"
+
+    - id: "R_TUNNEL_2"
+      condition: "successful tunnel"
+      action: "tunnel_probability decreases by 0.2"
+      effect: "harder to tunnel repeatedly"
+
+  enhancement:
+    - id: "R_ENHANCE_1"
+      condition: "marker stationary for 2 turns"
+      action: "tunnel_probability increases by 0.1 (max 0.9)"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "tunnel into cell with enemy"
+      action: "50% capture enemy, 50% both destroyed"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has < 3 markers"
+
+description: |
+  Quantum Tunnel introduces probabilistic movement. Markers can tunnel through enemies
+  based on probability. Successful tunnels reduce future probability, stationary markers
+  increase it. Tunneling into enemies has risk/reward. Manage probability strategically.
+
+induction_difficulty:
+  observable_patterns: "very_high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 20-25

@@ -1,0 +1,20 @@
+game_id: "continental_drift_130"
+name: "Continental Drift"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Board regions drift over time (move 1 cell every 3 turns)"
+  - id: "R2"
+    action: "Continents collide: mountain chains form (impassable)"
+  - id: "R3"
+    action: "Continents separate: ocean forms (different movement rules)"
+  - id: "R4"
+    action: "Markers on continent move with continent"
+  - id: "R5"
+    action: "Island formation: isolated markers form new continent"
+
+win:
+  condition: "Control 3 separate continents"
+
+minimal_scenarios: 18-22

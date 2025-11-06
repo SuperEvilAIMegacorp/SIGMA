@@ -1,0 +1,20 @@
+game_id: "mitosis_146"
+name: "Mitosis"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Cells divide when reaching size threshold (10)"
+  - id: "R2"
+    action: "Division creates 2 daughter cells (size 5 each)"
+  - id: "R3"
+    action: "Cells grow +1 size per turn"
+  - id: "R4"
+    action: "Mutations possible during division (10% chance property change)"
+  - id: "R5"
+    action: "Cell death if size < 2"
+
+win:
+  condition: "Have 16 cells simultaneously through division"
+
+minimal_scenarios: 14-17

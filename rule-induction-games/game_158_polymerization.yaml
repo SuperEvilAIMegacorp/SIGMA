@@ -1,0 +1,20 @@
+game_id: "polymerization_158"
+name: "Polymerization"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Monomers link into polymers (chain growth)"
+  - id: "R2"
+    action: "Addition polymerization: no byproducts"
+  - id: "R3"
+    action: "Condensation polymerization: releases water"
+  - id: "R4"
+    action: "Chain length affects properties"
+  - id: "R5"
+    action: "Cross-linking creates 3D networks"
+
+win:
+  condition: "Build polymer chain of 20+ monomers"
+
+minimal_scenarios: 16-20

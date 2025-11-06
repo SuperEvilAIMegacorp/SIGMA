@@ -1,0 +1,20 @@
+game_id: "hierarchical_graph_135"
+name: "Hierarchical Graph"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Nodes arranged in hierarchy (tree structure)"
+  - id: "R2"
+    action: "Parent nodes control child nodes"
+  - id: "R3"
+    action: "Capturing parent: inherit all children"
+  - id: "R4"
+    action: "Children can rebel (3+ children, no siblings)"
+  - id: "R5"
+    action: "Root node controls entire subtree"
+
+win:
+  condition: "Control root node"
+
+minimal_scenarios: 15-18

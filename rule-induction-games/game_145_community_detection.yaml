@@ -1,0 +1,20 @@
+game_id: "community_detection_145"
+name: "Community Detection"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Graph has hidden communities (dense subgraphs)"
+  - id: "R2"
+    action: "Modularity score measures community quality"
+  - id: "R3"
+    action: "Identifying community: gain control of all nodes"
+  - id: "R4"
+    action: "Communities overlap: nodes can belong to multiple"
+  - id: "R5"
+    action: "Algorithm: maximize modularity Q"
+
+win:
+  condition: "Detect and control 3 distinct communities"
+
+minimal_scenarios: 19-24

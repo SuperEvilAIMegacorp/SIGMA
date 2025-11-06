@@ -1,0 +1,20 @@
+game_id: "constraint_graph_185"
+name: "Constraint Graph"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Variables connected by constraint edges"
+  - id: "R2"
+    action: "Each edge defines relationship (>, <, =, ≠)"
+  - id: "R3"
+    action: "Arc consistency: values must satisfy all constraints"
+  - id: "R4"
+    action: "Domain reduction: eliminate impossible values"
+  - id: "R5"
+    action: "Backtracking on conflicts"
+
+win:
+  condition: "Find consistent assignment for 10-variable graph"
+
+minimal_scenarios: 18-23

@@ -1,0 +1,20 @@
+game_id: "glacier_formation_151"
+name: "Glacier Formation"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Snow accumulates → firn → glacial ice"
+  - id: "R2"
+    action: "Pressure from above compresses layers"
+  - id: "R3"
+    action: "Ice flows downhill (plastic deformation)"
+  - id: "R4"
+    action: "Melting at edges (ablation zone)"
+  - id: "R5"
+    action: "Crevasses form under stress"
+
+win:
+  condition: "Build flowing glacier covering 12 cells"
+
+minimal_scenarios: 16-19

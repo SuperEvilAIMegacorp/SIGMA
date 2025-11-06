@@ -1,0 +1,20 @@
+game_id: "crew_assignment_190"
+name: "Crew Assignment"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Assign crew members to roles"
+  - id: "R2"
+    action: "Skill requirements: each role needs specific skills"
+  - id: "R3"
+    action: "Compatibility constraints: certain members can't work together"
+  - id: "R4"
+    action: "Workload balance: each member 1-2 roles only"
+  - id: "R5"
+    action: "Optimize team efficiency score"
+
+win:
+  condition: "Assign 15 members to 20 roles with efficiency > 80%"
+
+minimal_scenarios: 17-21

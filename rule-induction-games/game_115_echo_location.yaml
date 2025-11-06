@@ -1,0 +1,20 @@
+game_id: "echo_location_115"
+name: "Echo Location"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Send echo pulse (travels outward in all directions)"
+  - id: "R2"
+    action: "Pulse bounces off enemies, returns info (distance, direction)"
+  - id: "R3"
+    action: "Multiple echoes triangulate exact position"
+  - id: "R4"
+    action: "Echo pulse costs 2 actions"
+  - id: "R5"
+    action: "Enemies detected by 3+ echoes: can be targeted for capture"
+
+win:
+  condition: "Locate and capture 10 enemies using echoes"
+
+minimal_scenarios: 14-17

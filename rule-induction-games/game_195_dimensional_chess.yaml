@@ -1,0 +1,20 @@
+game_id: "dimensional_chess_195"
+name: "Dimensional Chess"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines multi-layer + simultaneous + constraint + topology shift"
+  - id: "R2"
+    action: "3D grid with temporal axis (4D)"
+  - id: "R3"
+    action: "Pieces move through space-time"
+  - id: "R4"
+    action: "Simultaneous moves resolved by priority constraints"
+  - id: "R5"
+    action: "Topology changes affect legal moves retroactively"
+
+win:
+  condition: "Checkmate in 4D space-time"
+
+minimal_scenarios: 27-33

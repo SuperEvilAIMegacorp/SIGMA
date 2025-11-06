@@ -1,0 +1,20 @@
+game_id: "scale_free_142"
+name: "Scale-Free"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Power-law degree distribution (few hubs, many low-degree)"
+  - id: "R2"
+    action: "Preferential attachment: new nodes connect to high-degree nodes"
+  - id: "R3"
+    action: "Hubs have degree 10+, regular nodes degree 1-2"
+  - id: "R4"
+    action: "Attacking hubs: cascading failures"
+  - id: "R5"
+    action: "Network resilience depends on hub protection"
+
+win:
+  condition: "Build robust scale-free network (3 hubs survive attack)"
+
+minimal_scenarios: 19-23

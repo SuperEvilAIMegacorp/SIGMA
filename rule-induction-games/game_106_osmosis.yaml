@@ -1,0 +1,20 @@
+game_id: "osmosis_106"
+name: "Osmosis"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers have concentration value (1-10)"
+  - id: "R2"
+    action: "Each turn, concentration flows from high to low (adjacent cells)"
+  - id: "R3"
+    action: "Flow rate = (high_conc - low_conc) / 2"
+  - id: "R4"
+    action: "Markers reaching concentration 0: removed"
+  - id: "R5"
+    action: "Markers reaching concentration 10: split into 2 markers (conc 5 each)"
+
+win:
+  condition: "Have 10+ markers on board"
+
+minimal_scenarios: 15-19

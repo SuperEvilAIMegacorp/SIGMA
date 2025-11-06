@@ -1,0 +1,20 @@
+game_id: "allotrope_147"
+name: "Allotrope"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Same element, different structures (diamond/graphite/fullerene)"
+  - id: "R2"
+    action: "Pressure/temperature triggers transformation"
+  - id: "R3"
+    action: "Diamond: hardest (immune to capture), slow"
+  - id: "R4"
+    action: "Graphite: conductive, medium speed"
+  - id: "R5"
+    action: "Fullerene: mobile, weak"
+
+win:
+  condition: "Convert 8 markers to diamond form"
+
+minimal_scenarios: 15-18

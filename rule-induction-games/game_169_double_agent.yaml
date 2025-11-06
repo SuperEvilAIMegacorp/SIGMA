@@ -1,0 +1,20 @@
+game_id: "double_agent_169"
+name: "Double Agent"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Simultaneously choose: loyal, betray, or suspect"
+  - id: "R2"
+    action: "Both loyal: progress mission (+2 each)"
+  - id: "R3"
+    action: "One betrays: betrayer +5, loyal loses 3"
+  - id: "R4"
+    action: "Suspect correct (opponent betrays): expose (+4), opponent loses 5"
+  - id: "R5"
+    action: "Suspect wrong (opponent loyal): lose 2, opponent +1"
+
+win:
+  condition: "Complete mission (20 progress) or eliminate opponent (negative score)"
+
+minimal_scenarios: 16-20

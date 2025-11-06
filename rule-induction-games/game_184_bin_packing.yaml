@@ -1,0 +1,20 @@
+game_id: "bin_packing_184"
+name: "Bin Packing"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Pack items (sizes 1-10) into bins (capacity 15)"
+  - id: "R2"
+    action: "Minimize number of bins used"
+  - id: "R3"
+    action: "Items can't be split across bins"
+  - id: "R4"
+    action: "Opponent chooses item sizes strategically"
+  - id: "R5"
+    action: "Greedy vs optimal: tradeoff"
+
+win:
+  condition: "Pack 20 items using ≤ 10 bins"
+
+minimal_scenarios: 15-18

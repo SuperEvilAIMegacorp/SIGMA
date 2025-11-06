@@ -1,0 +1,20 @@
+game_id: "magic_square_189"
+name: "Magic Square"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Fill n×n grid with numbers 1 to n²"
+  - id: "R2"
+    action: "Each row sums to same value (magic constant)"
+  - id: "R3"
+    action: "Each column sums to magic constant"
+  - id: "R4"
+    action: "Diagonals sum to magic constant"
+  - id: "R5"
+    action: "Each number used exactly once"
+
+win:
+  condition: "Create valid 5x5 magic square"
+
+minimal_scenarios: 19-24

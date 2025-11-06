@@ -1,0 +1,20 @@
+game_id: "metamaterial_111"
+name: "Metamaterial"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers have refractive index (1-5)"
+  - id: "R2"
+    action: "Influence rays bend when passing through markers (angle = index)"
+  - id: "R3"
+    action: "High index (4-5): rays bend sharply, can curve around corners"
+  - id: "R4"
+    action: "Markers hit by 2+ bent rays: captured"
+  - id: "R5"
+    action: "Creating closed ray loop: all markers inside captured"
+
+win:
+  condition: "Capture 12 enemies using ray manipulation"
+
+minimal_scenarios: 17-21

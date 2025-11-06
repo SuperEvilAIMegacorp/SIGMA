@@ -1,0 +1,20 @@
+game_id: "bluff_battle_167"
+name: "Bluff Battle"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Simultaneously declare strength (1-10) and choose attack/defend"
+  - id: "R2"
+    action: "Can bluff (declare higher than actual)"
+  - id: "R3"
+    action: "Opponent can call bluff: reveal true strength"
+  - id: "R4"
+    action: "Caught bluffing: lose 3 points"
+  - id: "R5"
+    action: "Successful bluff: +2 points"
+
+win:
+  condition: "Win 5 confrontations"
+
+minimal_scenarios: 14-18

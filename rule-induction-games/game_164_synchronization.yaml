@@ -1,0 +1,20 @@
+game_id: "synchronization_164"
+name: "Synchronization"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Both choose rhythm (1-8 beat patterns)"
+  - id: "R2"
+    action: "Matching rhythms: sync bonus (3 points)"
+  - id: "R3"
+    action: "Complementary rhythms (offset by 4): harmony (5 points)"
+  - id: "R4"
+    action: "Clashing rhythms: dissonance (lose 2 points)"
+  - id: "R5"
+    action: "Building patterns across turns: crescendo multiplier"
+
+win:
+  condition: "Achieve perfect harmony 5 times"
+
+minimal_scenarios: 14-17

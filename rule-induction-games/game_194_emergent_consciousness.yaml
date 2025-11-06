@@ -1,0 +1,20 @@
+game_id: "emergent_consciousness_194"
+name: "Emergent Consciousness"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines neural network + cellular automata + phase transitions"
+  - id: "R2"
+    action: "Neurons fire in patterns (Conway's Life rules + gradient)"
+  - id: "R3"
+    action: "Critical threshold: system becomes self-aware"
+  - id: "R4"
+    action: "Consciousness emergent property (not programmed directly)"
+  - id: "R5"
+    action: "Aware systems: can rewrite own rules"
+
+win:
+  condition: "Create self-modifying conscious system"
+
+minimal_scenarios: 28-34

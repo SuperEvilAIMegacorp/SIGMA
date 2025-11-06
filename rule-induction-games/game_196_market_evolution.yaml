@@ -1,0 +1,20 @@
+game_id: "market_evolution_196"
+name: "Market Evolution"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines auction + accumulation + mutation + ecosystem"
+  - id: "R2"
+    action: "Resources mutate based on market conditions"
+  - id: "R3"
+    action: "Simultaneous bids affect price dynamics"
+  - id: "R4"
+    action: "Compound returns drive evolution of strategies"
+  - id: "R5"
+    action: "Feedback loops create boom/bust cycles"
+
+win:
+  condition: "Survive 3 market cycles with portfolio value 500+"
+
+minimal_scenarios: 25-31

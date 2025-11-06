@@ -1,0 +1,20 @@
+game_id: "fractal_graph_138"
+name: "Fractal Graph"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Graph structure repeats at multiple scales"
+  - id: "R2"
+    action: "Each node contains smaller copy of entire graph"
+  - id: "R3"
+    action: "Controlling node at scale N: affects all smaller scales"
+  - id: "R4"
+    action: "Fractal depth = 3 (graph within graph within graph)"
+  - id: "R5"
+    action: "Patterns must match across scales"
+
+win:
+  condition: "Control matching nodes at all 3 scales"
+
+minimal_scenarios: 21-26

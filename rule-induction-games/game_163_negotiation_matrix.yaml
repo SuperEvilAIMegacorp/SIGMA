@@ -1,0 +1,22 @@
+game_id: "negotiation_matrix_163"
+name: "Negotiation Matrix"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Choose: cooperate, defect, or neutral"
+  - id: "R2"
+    action: "Both cooperate: +3 each"
+  - id: "R3"
+    action: "Both defect: +1 each"
+  - id: "R4"
+    action: "One defects, one cooperates: defector +5, cooperator 0"
+  - id: "R5"
+    action: "Neutral: immune to exploitation, always +2"
+  - id: "R6"
+    action: "History visible: patterns affect trust"
+
+win:
+  condition: "Reach 30 points"
+
+minimal_scenarios: 15-19

@@ -1,0 +1,20 @@
+game_id: "aurora_field_129"
+name: "Aurora Field"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers emit colored light (red, green, blue)"
+  - id: "R2"
+    action: "Overlapping lights mix (RGB color mixing rules)"
+  - id: "R3"
+    action: "Cells with specific colors gain powers (red=attack, green=defense, blue=move)"
+  - id: "R4"
+    action: "White light (all 3 colors): marker ascends (super powered)"
+  - id: "R5"
+    action: "Black (no light): marker dormant"
+
+win:
+  condition: "Create 3 ascended markers"
+
+minimal_scenarios: 16-20

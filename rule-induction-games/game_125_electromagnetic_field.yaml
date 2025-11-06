@@ -1,0 +1,20 @@
+game_id: "electromagnetic_field_125"
+name: "Electromagnetic Field"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers generate EM field (strength = charge value)"
+  - id: "R2"
+    action: "Fields follow inverse square law (strength ∝ 1/distance²)"
+  - id: "R3"
+    action: "Charged markers in field: experience force (move toward/away)"
+  - id: "R4"
+    action: "Strong fields (total > 10): induce current in neutral markers"
+  - id: "R5"
+    action: "Current-carrying markers can be captured by magnetic fields"
+
+win:
+  condition: "Trap 10 enemies in field configuration"
+
+minimal_scenarios: 19-23

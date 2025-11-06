@@ -1,0 +1,20 @@
+game_id: "viral_load_121"
+name: "Viral Load"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers have viral load (0-100)"
+  - id: "R2"
+    action: "Adjacent markers: viral load transfers (10 units/turn to lower load)"
+  - id: "R3"
+    action: "Load > 80: marker becomes infectious (spreads to all neighbors)"
+  - id: "R4"
+    action: "Load < 20: marker develops immunity (cannot be infected)"
+  - id: "R5"
+    action: "Enemy markers infected: convert to your color"
+
+win:
+  condition: "Convert 15 enemies via infection"
+
+minimal_scenarios: 15-18

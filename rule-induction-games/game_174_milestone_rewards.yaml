@@ -1,0 +1,20 @@
+game_id: "milestone_rewards_174"
+name: "Milestone Rewards"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Reaching milestones (10, 25, 50, 100 points)"
+  - id: "R2"
+    action: "Each milestone: permanent bonus (+10% all future scoring)"
+  - id: "R3"
+    action: "Bonuses stack multiplicatively"
+  - id: "R4"
+    action: "Early milestones easier but provide same bonus"
+  - id: "R5"
+    action: "Late milestones: harder but benefit from accumulated bonuses"
+
+win:
+  condition: "Reach 100 points milestone (4th milestone)"
+
+minimal_scenarios: 14-17

@@ -1,0 +1,24 @@
+game_id: "infinite_recursion_200"
+name: "Infinite Recursion"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Maximum complexity: ALL mechanics combined recursively"
+  - id: "R2"
+    action: "Grid contains graphs, graphs contain grids (fractal nesting)"
+  - id: "R3"
+    action: "State transformations affect network topology"
+  - id: "R4"
+    action: "Simultaneous actions create quantum superpositions"
+  - id: "R5"
+    action: "Accumulation at each level feeds back to all other levels"
+  - id: "R6"
+    action: "Constraints emerge from interaction of all subsystems"
+  - id: "R7"
+    action: "Each solved level unlocks deeper level (depth 5)"
+
+win:
+  condition: "Solve all 5 recursive levels achieving mastery threshold at each"
+
+minimal_scenarios: 35-45

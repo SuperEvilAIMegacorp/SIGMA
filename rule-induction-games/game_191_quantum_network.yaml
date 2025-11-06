@@ -1,0 +1,20 @@
+game_id: "quantum_network_191"
+name: "Quantum Network"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines quantum superposition + graph connectivity"
+  - id: "R2"
+    action: "Nodes in multiple states, edges probabilistic"
+  - id: "R3"
+    action: "Measuring collapses local network structure"
+  - id: "R4"
+    action: "Entangled clusters act as single super-node"
+  - id: "R5"
+    action: "Interference patterns affect path weights"
+
+win:
+  condition: "Control entangled super-node spanning 8 nodes"
+
+minimal_scenarios: 24-29

@@ -1,0 +1,20 @@
+game_id: "nonogram_187"
+name: "Nonogram"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Fill grid (black/white) based on row/column clues"
+  - id: "R2"
+    action: "Clues: consecutive black cells (e.g., '3 1' = 3 blacks, gap, 1 black)"
+  - id: "R3"
+    action: "All clues must be satisfied"
+  - id: "R4"
+    action: "Logical deduction only (no guessing)"
+  - id: "R5"
+    action: "Reveals hidden picture when complete"
+
+win:
+  condition: "Solve 8x8 nonogram puzzle"
+
+minimal_scenarios: 17-22

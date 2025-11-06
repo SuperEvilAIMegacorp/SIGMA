@@ -1,0 +1,20 @@
+game_id: "multi_layer_network_134"
+name: "Multi-Layer Network"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Graph has 3 layers (physical, logical, social)"
+  - id: "R2"
+    action: "Each layer has different connectivity rules"
+  - id: "R3"
+    action: "Cross-layer edges connect same node across layers"
+  - id: "R4"
+    action: "Control in all 3 layers: node becomes anchor"
+  - id: "R5"
+    action: "Anchor nodes cannot be captured"
+
+win:
+  condition: "Create 4 anchor nodes"
+
+minimal_scenarios: 20-24

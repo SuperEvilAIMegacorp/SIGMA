@@ -1,0 +1,20 @@
+game_id: "mycelium_network_128"
+name: "Mycelium Network"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers are fungal nodes connected by hyphae"
+  - id: "R2"
+    action: "Network grows automatically (extends to adjacent empty cells)"
+  - id: "R3"
+    action: "Nutrients flow through network (distributed evenly)"
+  - id: "R4"
+    action: "Rich nodes (nutrients > 5): produce spores (new distant nodes)"
+  - id: "R5"
+    action: "Enemy networks compete: stronger network absorbs weaker"
+
+win:
+  condition: "Cover 20 cells with mycelium network"
+
+minimal_scenarios: 15-18

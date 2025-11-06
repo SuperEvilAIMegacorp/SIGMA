@@ -1,0 +1,20 @@
+game_id: "hypergraph_132"
+name: "Hypergraph"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Hyperedges connect 3+ nodes simultaneously"
+  - id: "R2"
+    action: "Controlling all nodes in hyperedge: own the hyperedge"
+  - id: "R3"
+    action: "Hyperedges can overlap (share nodes)"
+  - id: "R4"
+    action: "Owning connected hyperedges: multiply points"
+  - id: "R5"
+    action: "Max hyperedge size = 5 nodes"
+
+win:
+  condition: "Own 5 hyperedges"
+
+minimal_scenarios: 18-22

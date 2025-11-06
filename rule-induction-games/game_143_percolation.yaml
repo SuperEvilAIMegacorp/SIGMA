@@ -1,0 +1,20 @@
+game_id: "percolation_143"
+name: "Percolation"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Edges randomly active/inactive (probability p)"
+  - id: "R2"
+    action: "Percolation: connected cluster spans entire graph"
+  - id: "R3"
+    action: "Critical threshold p_c ≈ 0.5 for this graph"
+  - id: "R4"
+    action: "Above threshold: giant component forms"
+  - id: "R5"
+    action: "Controlling giant component: control entire network"
+
+win:
+  condition: "Trigger percolation and control giant component"
+
+minimal_scenarios: 17-21

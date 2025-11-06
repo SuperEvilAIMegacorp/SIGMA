@@ -1,0 +1,20 @@
+game_id: "spin_states_148"
+name: "Spin States"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Particles have spin (up/down)"
+  - id: "R2"
+    action: "Magnetic field flips spins"
+  - id: "R3"
+    action: "Aligned spins (all same direction): ferromagnetic (strong)"
+  - id: "R4"
+    action: "Anti-aligned (alternating): antiferromagnetic (cancel)"
+  - id: "R5"
+    action: "Random spins: paramagnetic (weak)"
+
+win:
+  condition: "Create ferromagnetic domain of 10 aligned spins"
+
+minimal_scenarios: 16-19

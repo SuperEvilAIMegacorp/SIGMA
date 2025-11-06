@@ -1,0 +1,20 @@
+game_id: "superconductor_156"
+name: "Superconductor"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Cool below critical temperature: becomes superconducting"
+  - id: "R2"
+    action: "Zero resistance (current flows forever)"
+  - id: "R3"
+    action: "Meissner effect: expels magnetic fields"
+  - id: "R4"
+    action: "Cooper pairs form (electrons pair up)"
+  - id: "R5"
+    action: "Heat above Tc: returns to normal state"
+
+win:
+  condition: "Maintain superconducting network of 10 nodes"
+
+minimal_scenarios: 17-21

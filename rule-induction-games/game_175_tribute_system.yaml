@@ -1,0 +1,20 @@
+game_id: "tribute_system_175"
+name: "Tribute System"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Vassals pay tribute each turn"
+  - id: "R2"
+    action: "More vassals = more income"
+  - id: "R3"
+    action: "Tribute amount = vassal_value × loyalty"
+  - id: "R4"
+    action: "Loyalty decreases without maintenance (-5% per turn)"
+  - id: "R5"
+    action: "Rebellion: loyalty < 30%, vassal breaks free"
+
+win:
+  condition: "Maintain 8 loyal vassals for 5 turns"
+
+minimal_scenarios: 15-19

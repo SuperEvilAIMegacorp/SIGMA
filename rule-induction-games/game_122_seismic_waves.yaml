@@ -1,0 +1,20 @@
+game_id: "seismic_waves_122"
+name: "Seismic Waves"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Placement creates seismic wave (ripple outward)"
+  - id: "R2"
+    action: "Wave amplitude = 5, decreases by 1 per cell"
+  - id: "R3"
+    action: "Markers hit by wave amplitude ≥ their stability: displaced"
+  - id: "R4"
+    action: "Displaced markers move in wave direction"
+  - id: "R5"
+    action: "Multiple waves interfere (amplitudes combine)"
+
+win:
+  condition: "Displace 10 enemies off board"
+
+minimal_scenarios: 14-17

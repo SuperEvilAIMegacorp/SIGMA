@@ -1,0 +1,22 @@
+game_id: "symbiosis_107"
+name: "Symbiosis"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Place marker with species type (A, B, or C)"
+  - id: "R2"
+    action: "Species A benefits from adjacent Species B (+1 health/turn)"
+  - id: "R3"
+    action: "Species B benefits from adjacent Species C (+1 health/turn)"
+  - id: "R4"
+    action: "Species C benefits from adjacent Species A (+1 health/turn)"
+  - id: "R5"
+    action: "Markers without symbiotic partner: lose 1 health/turn (die at 0)"
+  - id: "R6"
+    action: "Markers with 5+ health: can reproduce (spawn adjacent copy)"
+
+win:
+  condition: "Maintain ecosystem with all 3 species for 5 turns"
+
+minimal_scenarios: 16-19

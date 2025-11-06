@@ -1,0 +1,20 @@
+game_id: "fermentation_157"
+name: "Fermentation"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Sugar → alcohol + CO2 (anaerobic)"
+  - id: "R2"
+    action: "Yeast population grows exponentially"
+  - id: "R3"
+    action: "Alcohol concentration inhibits yeast (>15%)"
+  - id: "R4"
+    action: "Temperature affects rate (optimal 20-30°C)"
+  - id: "R5"
+    action: "Complete fermentation: product ready"
+
+win:
+  condition: "Successfully ferment 5 batches"
+
+minimal_scenarios: 14-17

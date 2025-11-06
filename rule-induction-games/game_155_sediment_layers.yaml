@@ -1,0 +1,20 @@
+game_id: "sediment_layers_155"
+name: "Sediment Layers"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Sediment deposits in layers (stratigraphy)"
+  - id: "R2"
+    action: "Younger layers on top (superposition)"
+  - id: "R3"
+    action: "Compaction: sediment → sedimentary rock"
+  - id: "R4"
+    action: "Fossils preserved in layers"
+  - id: "R5"
+    action: "Folding/faulting disrupts layers"
+
+win:
+  condition: "Build undisturbed sequence of 8 layers"
+
+minimal_scenarios: 15-19

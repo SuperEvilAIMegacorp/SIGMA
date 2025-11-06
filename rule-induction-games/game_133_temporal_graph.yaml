@@ -1,0 +1,20 @@
+game_id: "temporal_graph_133"
+name: "Temporal Graph"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Edges have timestamps (valid during specific turns)"
+  - id: "R2"
+    action: "Future edges visible but unusable until timestamp"
+  - id: "R3"
+    action: "Past edges decay (disappear after 5 turns)"
+  - id: "R4"
+    action: "Temporal paths: must exist at specific moment"
+  - id: "R5"
+    action: "Controlling temporal chokepoint: bonus"
+
+win:
+  condition: "Control path that exists at all timestamps"
+
+minimal_scenarios: 19-24

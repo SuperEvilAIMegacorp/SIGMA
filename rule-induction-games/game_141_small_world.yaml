@@ -1,0 +1,20 @@
+game_id: "small_world_141"
+name: "Small World"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Mostly local connections + few long-range shortcuts"
+  - id: "R2"
+    action: "Creating shortcut: costs 5 points but reduces path lengths"
+  - id: "R3"
+    action: "Average path length affects score multiplier"
+  - id: "R4"
+    action: "Controlling hub nodes (high degree): bonus"
+  - id: "R5"
+    action: "Small-world coefficient must stay above 0.3"
+
+win:
+  condition: "Control network with optimal small-world structure"
+
+minimal_scenarios: 18-22

@@ -1,0 +1,20 @@
+game_id: "civilization_collapse_198"
+name: "Civilization Collapse"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines resource engine + tech tree + constraint + decay + tipping points"
+  - id: "R2"
+    action: "Civilizations grow via compound resource accumulation"
+  - id: "R3"
+    action: "Technology unlocks but increases fragility"
+  - id: "R4"
+    action: "Environmental constraints (must balance extraction/regeneration)"
+  - id: "R5"
+    action: "Exceeding limits triggers cascading collapse"
+
+win:
+  condition: "Reach space age without collapsing"
+
+minimal_scenarios: 28-35

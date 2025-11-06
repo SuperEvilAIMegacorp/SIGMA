@@ -1,0 +1,20 @@
+game_id: "tech_tree_172"
+name: "Tech Tree"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Research unlocks new technologies"
+  - id: "R2"
+    action: "Prerequisites: must research earlier techs first"
+  - id: "R3"
+    action: "Each tech provides passive bonuses"
+  - id: "R4"
+    action: "Higher tier techs: exponentially more powerful"
+  - id: "R5"
+    action: "Tech synergies: certain combinations unlock hidden bonuses"
+
+win:
+  condition: "Research 3 tier-5 technologies"
+
+minimal_scenarios: 16-20

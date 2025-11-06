@@ -1,0 +1,20 @@
+game_id: "plasma_ionization_160"
+name: "Plasma Ionization"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "High energy: atoms ionize (lose electrons)"
+  - id: "R2"
+    action: "Plasma: 4th state of matter (ionized gas)"
+  - id: "R3"
+    action: "Free electrons and ions move independently"
+  - id: "R4"
+    action: "Recombination: electron + ion → neutral atom"
+  - id: "R5"
+    action: "Magnetic fields confine plasma"
+
+win:
+  condition: "Sustain stable plasma (ionization = recombination) for 5 turns"
+
+minimal_scenarios: 17-21

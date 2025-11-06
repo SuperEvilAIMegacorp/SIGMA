@@ -1,0 +1,20 @@
+game_id: "exam_scheduling_188"
+name: "Exam Scheduling"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Schedule exams in time slots"
+  - id: "R2"
+    action: "Students taking multiple exams: no conflicts"
+  - id: "R3"
+    action: "Room capacity constraints"
+  - id: "R4"
+    action: "Minimize total time slots used"
+  - id: "R5"
+    action: "Fair spacing: ≥ 2 slots between student's exams"
+
+win:
+  condition: "Schedule 20 exams in ≤ 8 time slots"
+
+minimal_scenarios: 18-22

@@ -1,0 +1,20 @@
+game_id: "tectonic_shift_118"
+name: "Tectonic Shift"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Board divided into tectonic plates (3x3 sections)"
+  - id: "R2"
+    action: "Plates move each turn (up, down, left, right)"
+  - id: "R3"
+    action: "Plates colliding: markers on edge destroyed"
+  - id: "R4"
+    action: "Plates diverging: gap created (cannot place/move across)"
+  - id: "R5"
+    action: "Subduction: one plate slides under another (markers pushed off)"
+
+win:
+  condition: "Control 2 complete plates"
+
+minimal_scenarios: 18-22

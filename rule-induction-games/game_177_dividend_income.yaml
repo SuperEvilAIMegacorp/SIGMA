@@ -1,0 +1,20 @@
+game_id: "dividend_income_177"
+name: "Dividend Income"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Owned assets pay dividends"
+  - id: "R2"
+    action: "Dividend = asset_value × yield_rate"
+  - id: "R3"
+    action: "Reinvesting dividends: buy more assets"
+  - id: "R4"
+    action: "Compound effect: more assets → more dividends → more assets"
+  - id: "R5"
+    action: "Asset values fluctuate (±20% per turn)"
+
+win:
+  condition: "Generate 50 passive income per turn"
+
+minimal_scenarios: 15-18

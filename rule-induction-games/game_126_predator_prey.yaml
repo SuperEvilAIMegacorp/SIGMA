@@ -1,0 +1,20 @@
+game_id: "predator_prey_126"
+name: "Predator-Prey"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Place predator or prey marker"
+  - id: "R2"
+    action: "Predators hunt adjacent prey (capture)"
+  - id: "R3"
+    action: "Prey reproduce when 2+ prey adjacent (spawn new prey)"
+  - id: "R4"
+    action: "Predators without prey for 3 turns: starve (removed)"
+  - id: "R5"
+    action: "Population dynamics: oscillating predator/prey cycles"
+
+win:
+  condition: "Maintain stable ecosystem (both types present) for 8 turns"
+
+minimal_scenarios: 16-19

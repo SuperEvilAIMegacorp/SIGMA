@@ -1,0 +1,20 @@
+game_id: "nuclear_decay_159"
+name: "Nuclear Decay"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Radioactive isotopes decay (alpha, beta, gamma)"
+  - id: "R2"
+    action: "Half-life determines decay rate"
+  - id: "R3"
+    action: "Decay chains: isotope → daughter → granddaughter"
+  - id: "R4"
+    action: "Stable isotopes (end of chain)"
+  - id: "R5"
+    action: "Radiation affects adjacent cells"
+
+win:
+  condition: "Achieve decay equilibrium (secular equilibrium)"
+
+minimal_scenarios: 18-22

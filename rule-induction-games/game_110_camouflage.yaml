@@ -1,0 +1,22 @@
+game_id: "camouflage_110"
+name: "Camouflage"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers can be visible or camouflaged"
+  - id: "R2"
+    action: "Camouflaged markers invisible to opponent"
+  - id: "R3"
+    action: "Moving reveals marker for 1 turn"
+  - id: "R4"
+    action: "Attacking reveals marker for 2 turns"
+  - id: "R5"
+    action: "Adjacent enemy markers: automatic reveal"
+  - id: "R6"
+    action: "Can only capture visible enemies"
+
+win:
+  condition: "Capture 7 enemies using camouflage tactics"
+
+minimal_scenarios: 15-18

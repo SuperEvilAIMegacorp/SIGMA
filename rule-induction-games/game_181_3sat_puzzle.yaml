@@ -1,0 +1,20 @@
+game_id: "3sat_puzzle_181"
+name: "3-SAT Puzzle"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Boolean variables (true/false)"
+  - id: "R2"
+    action: "Clauses with 3 literals each (A OR B OR NOT C)"
+  - id: "R3"
+    action: "Satisfy all clauses simultaneously"
+  - id: "R4"
+    action: "Opponent can add conflicting clauses"
+  - id: "R5"
+    action: "Unsatisfiable: opponent wins"
+
+win:
+  condition: "Find satisfying assignment for 10-clause formula"
+
+minimal_scenarios: 18-22

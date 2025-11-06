@@ -1,0 +1,22 @@
+game_id: "bioluminescence_114"
+name: "Bioluminescence"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers emit light (radius based on energy level)"
+  - id: "R2"
+    action: "Lit cells can be seen and targeted"
+  - id: "R3"
+    action: "Dark cells hide markers from detection"
+  - id: "R4"
+    action: "Light intensity: decreases with distance (inverse square)"
+  - id: "R5"
+    action: "Overlapping light: adds together, can reveal hidden enemies"
+  - id: "R6"
+    action: "Using light costs energy (-1/turn)"
+
+win:
+  condition: "Illuminate and capture 8 hidden enemies"
+
+minimal_scenarios: 16-19

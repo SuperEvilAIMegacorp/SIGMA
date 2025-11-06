@@ -1,0 +1,20 @@
+game_id: "dynamic_edges_131"
+name: "Dynamic Edges"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Edges appear/disappear based on node properties"
+  - id: "R2"
+    action: "Edge exists if: sum of connected node values is even"
+  - id: "R3"
+    action: "Changing node value changes edge connectivity"
+  - id: "R4"
+    action: "Paths must be recalculated each turn"
+  - id: "R5"
+    action: "Isolating enemy nodes: capture"
+
+win:
+  condition: "Control all bridge nodes in dynamic graph"
+
+minimal_scenarios: 17-21

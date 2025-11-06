@@ -1,0 +1,20 @@
+game_id: "scheduling_game_182"
+name: "Scheduling Game"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Schedule tasks with time windows"
+  - id: "R2"
+    action: "Dependencies: task B requires task A completion"
+  - id: "R3"
+    action: "Resource conflicts: can't do two tasks simultaneously"
+  - id: "R4"
+    action: "Deadlines: tasks must finish before deadline"
+  - id: "R5"
+    action: "Minimize makespan (total schedule length)"
+
+win:
+  condition: "Complete all 15 tasks within deadline"
+
+minimal_scenarios: 17-21

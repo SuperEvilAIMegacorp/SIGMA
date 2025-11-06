@@ -1,0 +1,20 @@
+game_id: "cosmic_symphony_197"
+name: "Cosmic Symphony"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines wave interference + resonance + stellar evolution + synchronization"
+  - id: "R2"
+    action: "Stars emit gravitational waves (interference patterns)"
+  - id: "R3"
+    action: "Resonance between stellar systems"
+  - id: "R4"
+    action: "Evolution stages change resonant frequencies"
+  - id: "R5"
+    action: "Synchronized systems: amplified cosmic chorus"
+
+win:
+  condition: "Create harmonious galaxy (10 synchronized stellar systems)"
+
+minimal_scenarios: 26-32

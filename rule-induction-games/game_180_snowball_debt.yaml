@@ -1,0 +1,20 @@
+game_id: "snowball_debt_180"
+name: "Snowball Debt"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Can borrow resources (take debt)"
+  - id: "R2"
+    action: "Interest accumulates: debt × 1.1 per turn"
+  - id: "R3"
+    action: "Borrowed resources can be invested for growth"
+  - id: "R4"
+    action: "Debt > income: bankruptcy (lose game)"
+  - id: "R5"
+    action: "Strategic borrowing: leverage for exponential growth"
+
+win:
+  condition: "Reach 200 net worth (assets - debt)"
+
+minimal_scenarios: 16-20

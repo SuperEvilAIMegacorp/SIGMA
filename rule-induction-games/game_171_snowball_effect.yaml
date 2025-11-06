@@ -1,0 +1,20 @@
+game_id: "snowball_effect_171"
+name: "Snowball Effect"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Score multiplies by current streak"
+  - id: "R2"
+    action: "Consecutive successes: streak +1"
+  - id: "R3"
+    action: "Failure: streak resets to 0"
+  - id: "R4"
+    action: "Streak 5+: unlock special actions"
+  - id: "R5"
+    action: "Risk vs reward: harder actions = bigger multipliers"
+
+win:
+  condition: "Reach 100 points via compounding streaks"
+
+minimal_scenarios: 14-17

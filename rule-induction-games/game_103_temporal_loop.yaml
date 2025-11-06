@@ -1,0 +1,20 @@
+game_id: "temporal_loop_103"
+name: "Temporal Loop"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Place marker with timestamp (turn number)"
+  - id: "R2"
+    action: "Every 3 turns, board state rewinds to turn N-3"
+  - id: "R3"
+    action: "Markers with timestamp < current: become 'echoes' (ghost copies)"
+  - id: "R4"
+    action: "Echoes can block movement but cannot be captured"
+  - id: "R5"
+    action: "Placing on echo cell: echo destroyed, +2 points"
+
+win:
+  condition: "Score 20 points"
+
+minimal_scenarios: 18-22

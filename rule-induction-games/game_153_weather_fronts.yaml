@@ -1,0 +1,20 @@
+game_id: "weather_fronts_153"
+name: "Weather Fronts"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Air masses: warm/cold, moist/dry"
+  - id: "R2"
+    action: "Cold front: cold air pushes under warm (storms)"
+  - id: "R3"
+    action: "Warm front: warm air rises over cold (gradual rain)"
+  - id: "R4"
+    action: "Occluded front: cold overtakes warm (complex weather)"
+  - id: "R5"
+    action: "High/low pressure systems rotate"
+
+win:
+  condition: "Create major storm system (3 fronts interacting)"
+
+minimal_scenarios: 17-21

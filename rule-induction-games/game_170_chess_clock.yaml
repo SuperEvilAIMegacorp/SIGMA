@@ -1,0 +1,20 @@
+game_id: "chess_clock_170"
+name: "Chess Clock"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Each has time pool (60 seconds)"
+  - id: "R2"
+    action: "Simultaneously choose action AND time to spend"
+  - id: "R3"
+    action: "More time spent: stronger action (1 sec = 1 power)"
+  - id: "R4"
+    action: "Running out of time: can only make weak moves (1 power)"
+  - id: "R5"
+    action: "Time pressure: must decide quickly"
+
+win:
+  condition: "Reduce opponent to 0 time or score 20 points"
+
+minimal_scenarios: 13-17

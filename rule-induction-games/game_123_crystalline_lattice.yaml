@@ -1,0 +1,20 @@
+game_id: "crystalline_lattice_123"
+name: "Crystalline Lattice"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers must form perfect lattice structure (specific angles/distances)"
+  - id: "R2"
+    action: "Lattice patterns: cubic, hexagonal, or tetrahedral"
+  - id: "R3"
+    action: "Breaking lattice symmetry: defect created (weak point)"
+  - id: "R4"
+    action: "Defects propagate (crack spreads to adjacent cells)"
+  - id: "R5"
+    action: "Perfect lattice (no defects for 3 turns): becomes indestructible"
+
+win:
+  condition: "Build indestructible 4x4 lattice"
+
+minimal_scenarios: 18-22

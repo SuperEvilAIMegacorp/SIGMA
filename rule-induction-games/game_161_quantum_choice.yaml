@@ -1,0 +1,20 @@
+game_id: "quantum_choice_161"
+name: "Quantum Choice"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Both choose action simultaneously (hidden)"
+  - id: "R2"
+    action: "Actions exist in superposition until revealed"
+  - id: "R3"
+    action: "Measurement collapses: specific outcome based on both choices"
+  - id: "R4"
+    action: "Entangled choices: selecting same action amplifies effect (2x)"
+  - id: "R5"
+    action: "Opposite choices: interference (cancel out)"
+
+win:
+  condition: "Score 25 points through strategic choice coordination/opposition"
+
+minimal_scenarios: 14-18

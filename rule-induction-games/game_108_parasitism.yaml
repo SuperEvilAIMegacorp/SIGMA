@@ -1,0 +1,20 @@
+game_id: "parasitism_108"
+name: "Parasitism"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Place host marker (health = 5)"
+  - id: "R2"
+    action: "Can place parasite on enemy host (drains 1 health/turn from host)"
+  - id: "R3"
+    action: "Parasite gains drained health (max 3)"
+  - id: "R4"
+    action: "Host dies: parasite must find new host within 2 turns or dies"
+  - id: "R5"
+    action: "Parasite with 3 health: can infect adjacent hosts automatically"
+
+win:
+  condition: "Kill all enemy hosts via parasitism"
+
+minimal_scenarios: 14-17

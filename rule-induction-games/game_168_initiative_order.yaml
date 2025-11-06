@@ -1,0 +1,20 @@
+game_id: "initiative_order_168"
+name: "Initiative Order"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Bid initiative points (0-10) simultaneously"
+  - id: "R2"
+    action: "Higher bid acts first"
+  - id: "R3"
+    action: "Acting first: advantage (can counter opponent's planned move)"
+  - id: "R4"
+    action: "Spending initiative: depletes pool (max 30, replenish +5/turn)"
+  - id: "R5"
+    action: "Saving initiative (bid 0): pool grows faster (+10)"
+
+win:
+  condition: "Control initiative advantage for 5 consecutive turns"
+
+minimal_scenarios: 15-19

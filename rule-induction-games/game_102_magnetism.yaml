@@ -1,0 +1,20 @@
+game_id: "magnetism_102"
+name: "Magnetism"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Place marker with polarity (north/south)"
+  - id: "R2"
+    action: "Opposite polarities attract (move 1 cell closer each turn)"
+  - id: "R3"
+    action: "Same polarities repel (push apart)"
+  - id: "R4"
+    action: "Markers meeting same polarity: both destroyed"
+  - id: "R5"
+    action: "Markers meeting opposite polarity: form pair (immune to capture)"
+
+win:
+  condition: "Form 3 magnetic pairs"
+
+minimal_scenarios: 14-17

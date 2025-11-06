@@ -1,0 +1,20 @@
+game_id: "timing_attack_166"
+name: "Timing Attack"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Choose attack timing (instant, delay-1, delay-2, delay-3)"
+  - id: "R2"
+    action: "Attacks resolve in order: instant > delay-1 > delay-2 > delay-3"
+  - id: "R3"
+    action: "Faster attack interrupts slower (slower cancelled)"
+  - id: "R4"
+    action: "Same timing: both hit"
+  - id: "R5"
+    action: "Delayed attacks charge up (delay-3 = 3x damage)"
+
+win:
+  condition: "Land 8 successful attacks"
+
+minimal_scenarios: 13-16

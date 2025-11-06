@@ -1,0 +1,20 @@
+game_id: "tensor_network_140"
+name: "Tensor Network"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Nodes are tensors (multi-dimensional values)"
+  - id: "R2"
+    action: "Edges represent contractions (operations on tensors)"
+  - id: "R3"
+    action: "Network evaluates to scalar (final score)"
+  - id: "R4"
+    action: "Controlling key tensors: multiply final value"
+  - id: "R5"
+    action: "Optimal contraction order changes strategy"
+
+win:
+  condition: "Maximize network evaluation value (>100)"
+
+minimal_scenarios: 23-28

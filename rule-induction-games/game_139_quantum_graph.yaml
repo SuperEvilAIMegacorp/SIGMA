@@ -1,0 +1,20 @@
+game_id: "quantum_graph_139"
+name: "Quantum Graph"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Nodes in superposition (multiple states simultaneously)"
+  - id: "R2"
+    action: "Measuring node collapses superposition"
+  - id: "R3"
+    action: "Entangled nodes: measuring one affects other"
+  - id: "R4"
+    action: "Quantum walks: marker moves probabilistically"
+  - id: "R5"
+    action: "Interference: paths can cancel or reinforce"
+
+win:
+  condition: "Maintain entangled network of 6 nodes"
+
+minimal_scenarios: 22-27

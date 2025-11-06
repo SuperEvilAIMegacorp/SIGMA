@@ -1,0 +1,20 @@
+game_id: "directed_control_137"
+name: "Directed Control"
+category: "graph_game"
+
+rules:
+  - id: "R1"
+    action: "Directed edges (one-way connections)"
+  - id: "R2"
+    action: "Control flows downstream (following edge direction)"
+  - id: "R3"
+    action: "Upstream nodes can block flow"
+  - id: "R4"
+    action: "Cycles create feedback loops (amplify control)"
+  - id: "R5"
+    action: "Reversing edge direction costs 3 actions"
+
+win:
+  condition: "Create dominant feedback loop (5+ nodes)"
+
+minimal_scenarios: 17-21

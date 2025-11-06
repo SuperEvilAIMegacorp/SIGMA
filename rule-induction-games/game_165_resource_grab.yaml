@@ -1,0 +1,20 @@
+game_id: "resource_grab_165"
+name: "Resource Grab"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "5 resource piles (values: 2, 4, 6, 8, 10)"
+  - id: "R2"
+    action: "Each chooses one pile simultaneously"
+  - id: "R3"
+    action: "Same pile: split value (round down)"
+  - id: "R4"
+    action: "Different piles: each gets full value"
+  - id: "R5"
+    action: "Empty piles don't refill"
+
+win:
+  condition: "Collect 35 resources"
+
+minimal_scenarios: 12-15

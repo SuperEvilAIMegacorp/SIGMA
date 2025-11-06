@@ -1,0 +1,20 @@
+game_id: "temporal_ecosystem_192"
+name: "Temporal Ecosystem"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines time loops + state transformation + population dynamics"
+  - id: "R2"
+    action: "Species evolve, creating feedback across time"
+  - id: "R3"
+    action: "Past actions affect present ecosystem"
+  - id: "R4"
+    action: "Predator-prey cycles + metamorphosis + temporal echoes"
+  - id: "R5"
+    action: "Paradoxes allowed but score penalties"
+
+win:
+  condition: "Maintain stable multi-species ecosystem across 3 time loops"
+
+minimal_scenarios: 26-32

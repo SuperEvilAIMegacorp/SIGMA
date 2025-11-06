@@ -1,0 +1,20 @@
+game_id: "stellar_evolution_150"
+name: "Stellar Evolution"
+category: "state_transformation"
+
+rules:
+  - id: "R1"
+    action: "Star life cycle: nebula→main sequence→red giant→white dwarf/neutron star/black hole"
+  - id: "R2"
+    action: "Mass determines evolution path"
+  - id: "R3"
+    action: "Fusion stages: H→He→C→Fe"
+  - id: "R4"
+    action: "Supernova: massive stars explode (scatter elements)"
+  - id: "R5"
+    action: "Black hole: captures adjacent pieces"
+
+win:
+  condition: "Evolve star to black hole and capture 6 neighbors"
+
+minimal_scenarios: 18-22

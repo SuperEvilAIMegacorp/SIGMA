@@ -1,0 +1,20 @@
+game_id: "auction_war_162"
+name: "Auction War"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Simultaneous sealed bids on multiple items"
+  - id: "R2"
+    action: "Can split budget across items or concentrate"
+  - id: "R3"
+    action: "Winner pays second-highest bid (Vickrey)"
+  - id: "R4"
+    action: "Item synergies: owning sets multiplies value"
+  - id: "R5"
+    action: "Budget refreshes partially each round (+5 tokens)"
+
+win:
+  condition: "Collect 3 complete sets of items"
+
+minimal_scenarios: 13-17

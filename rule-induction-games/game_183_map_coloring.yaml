@@ -1,0 +1,20 @@
+game_id: "map_coloring_183"
+name: "Map Coloring"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Color regions with k colors"
+  - id: "R2"
+    action: "Adjacent regions: different colors required"
+  - id: "R3"
+    action: "Minimize colors used (chromatic number)"
+  - id: "R4"
+    action: "Opponent adds regions dynamically"
+  - id: "R5"
+    action: "Invalid coloring: must backtrack"
+
+win:
+  condition: "Color 12-region map with ≤ 4 colors"
+
+minimal_scenarios: 16-20

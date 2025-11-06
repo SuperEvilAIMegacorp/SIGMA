@@ -1,0 +1,20 @@
+game_id: "dna_replication_120"
+name: "DNA Replication"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Place base pairs (A-T, G-C) in sequence"
+  - id: "R2"
+    action: "Complementary pairs must match (A with T, G with C)"
+  - id: "R3"
+    action: "Complete helix (10 pairs): replicates (creates copy)"
+  - id: "R4"
+    action: "Mutations (wrong pairing): sequence breaks, scores 0"
+  - id: "R5"
+    action: "Enemy can place enzyme to cut sequence"
+
+win:
+  condition: "Successfully replicate 3 complete sequences"
+
+minimal_scenarios: 16-20

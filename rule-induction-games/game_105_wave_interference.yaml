@@ -1,0 +1,20 @@
+game_id: "wave_interference_105"
+name: "Wave Interference"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Each marker emits wave (amplitude decreases with distance)"
+  - id: "R2"
+    action: "Friendly waves: constructive interference (amplitudes add)"
+  - id: "R3"
+    action: "Enemy waves: destructive interference (amplitudes subtract)"
+  - id: "R4"
+    action: "Cells with net amplitude > 5: spawn new marker"
+  - id: "R5"
+    action: "Cells with net amplitude < -3: all markers destroyed"
+
+win:
+  condition: "Control 15+ cells via wave spawning"
+
+minimal_scenarios: 16-20

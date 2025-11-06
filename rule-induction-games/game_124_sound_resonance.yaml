@@ -1,0 +1,20 @@
+game_id: "sound_resonance_124"
+name: "Sound Resonance"
+category: "grid_game"
+
+rules:
+  - id: "R1"
+    action: "Markers have natural frequency (1-10 Hz)"
+  - id: "R2"
+    action: "Emit sound wave at chosen frequency"
+  - id: "R3"
+    action: "Markers matching frequency: resonate (amplitude increases)"
+  - id: "R4"
+    action: "High amplitude (>5): marker shatters (captured)"
+  - id: "R5"
+    action: "Harmonics: frequency multiples also resonate (half effect)"
+
+win:
+  condition: "Shatter 8 enemies via resonance"
+
+minimal_scenarios: 16-19

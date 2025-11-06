@@ -1,0 +1,20 @@
+game_id: "compound_growth_173"
+name: "Compound Growth"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Resources grow at rate r% per turn"
+  - id: "R2"
+    action: "Formula: amount(t) = amount(0) × (1 + r)^t"
+  - id: "R3"
+    action: "Investing increases r (+5% per investment)"
+  - id: "R4"
+    action: "Withdrawing for actions decreases principal"
+  - id: "R5"
+    action: "Patience rewarded: long-term growth > short-term gains"
+
+win:
+  condition: "Reach 1000 resources"
+
+minimal_scenarios: 15-18
