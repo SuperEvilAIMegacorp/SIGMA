@@ -1,0 +1,16 @@
+game_id: "combo_multiplier_073"
+name: "Combo Multiplier"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Consecutive successful actions increase multiplier"
+  - id: "R2"
+    action: "Multiplier applies to all scoring (2x, 3x, 4x, etc)"
+  - id: "R3"
+    action: "Failed action resets multiplier to 1x"
+
+win:
+  condition: "Score 100+ total points"
+
+minimal_scenarios: 12-15

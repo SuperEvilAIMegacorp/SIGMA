@@ -1,0 +1,64 @@
+game_id: "quantum_states_058"
+name: "Quantum States"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "qubit"
+      colors: ["red", "blue"]
+      states: ["|0⟩", "|1⟩", "|+⟩", "|-⟩"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place qubit in |0⟩ or |1⟩ state"
+
+  measurement:
+    - id: "R_MEASURE_1"
+      condition: "at end of turn"
+      action: "adjacent enemy qubits collapse to definite state"
+
+  superposition:
+    - id: "R_SUPER_1"
+      condition: "qubit isolated (no adjacent pieces)"
+      action: "can enter superposition (|+⟩ or |-⟩)"
+
+  interaction:
+    - id: "R_INTERACT_1"
+      condition: "|0⟩ adjacent to |1⟩"
+      action: "both become entangled (move together)"
+
+    - id: "R_INTERACT_2"
+      condition: "|+⟩ adjacent to enemy |-⟩"
+      action: "both measured to random |0⟩ or |1⟩"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy in definite state surrounded by 3 superposition qubits"
+      action: "enemy decoherence (removed)"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "have 5 entangled pairs"
+
+description: |
+  Quantum States models quantum mechanics. Qubits in definite states (|0⟩,|1⟩) or superposition
+  (|+⟩,|-⟩). Isolated qubits can superpose. Adjacent 0-1 pairs entangle. Superposition qubits
+  can surround enemies causing decoherence. Win by creating 5 entangled pairs. Quantum
+  behavior creates unique dynamics.
+
+induction_difficulty:
+  observable_patterns: "very_high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 20-25

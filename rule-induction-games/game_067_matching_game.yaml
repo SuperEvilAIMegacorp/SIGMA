@@ -1,0 +1,14 @@
+game_id: "matching_game_067"
+name: "Matching Game"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Choose move pattern simultaneously"
+  - id: "R2"
+    action: "Matching patterns cancel, different patterns both execute"
+
+win:
+  condition: "Capture 8+ opponent pieces"
+
+minimal_scenarios: 11-14

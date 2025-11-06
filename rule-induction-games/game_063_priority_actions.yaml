@@ -1,0 +1,47 @@
+game_id: "priority_actions_063"
+name: "Priority Actions"
+category: "simultaneous_action"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "agent"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "simultaneous"
+
+rules:
+  action_selection:
+    - id: "R_ACTION_1"
+      action: "choose: move(priority 1), place(priority 2), or capture(priority 3)"
+
+  resolution:
+    - id: "R_RESOLVE_1"
+      condition: "both choose same priority"
+      action: "actions cancel, no effect"
+
+    - id: "R_RESOLVE_2"
+      condition: "different priorities"
+      action: "lower priority resolves first"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has < 2 agents"
+
+description: |
+  Priority Actions has simultaneous action selection with priority numbers. Same priority
+  cancels. Different priorities resolve in order (lower first). Predicting opponent and
+  choosing counter-priority is strategic. Win by reducing opponent to < 2 agents.
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 12-15

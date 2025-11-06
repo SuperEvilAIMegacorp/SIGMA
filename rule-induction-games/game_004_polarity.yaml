@@ -1,0 +1,70 @@
+game_id: "polarity_004"
+name: "Polarity"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "charge"
+          type: "enum"
+          values: ["positive", "negative"]
+          description: "Polarity of the marker"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker with chosen charge"
+      effect: "marker added with + or - charge"
+
+  repulsion:
+    - id: "R_REPEL_1"
+      condition: "two same-charge markers become orthogonally adjacent"
+      action: "cannot place - repulsion blocks"
+      effect: "placement invalid"
+
+  attraction:
+    - id: "R_ATTRACT_1"
+      condition: "opposite-charge markers orthogonally adjacent"
+      action: "markers lock together"
+      effect: "neither can be moved or captured"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy marker surrounded by 4 same-charge friendly markers (diagonal)"
+      action: "capture enemy"
+      effect: "remove enemy marker"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has < 3 markers"
+
+description: |
+  Polarity features markers with positive or negative charge. Same charges repel (can't be
+  placed adjacent). Opposite charges attract (lock together when adjacent). Capture requires
+  surrounding enemy with 4 same-charge markers diagonally. Managing charge patterns is key.
+
+interactions:
+  - rules: ["R_REPEL_1", "R_PLACE_1"]
+    type: "blocking"
+  - rules: ["R_ATTRACT_1", "R_CAPTURE_1"]
+    type: "modifying"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 12-15

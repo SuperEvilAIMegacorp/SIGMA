@@ -1,0 +1,63 @@
+game_id: "ripening_059"
+name: "Ripening"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "fruit"
+      colors: ["red", "blue"]
+      ripeness: ["unripe", "ripe", "overripe", "rotten"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place unripe fruit"
+
+  ripening_rule:
+    - id: "R_RIPEN_1"
+      condition: "unripe for 2 turns"
+      action: "becomes ripe"
+
+    - id: "R_RIPEN_2"
+      condition: "ripe for 2 turns"
+      action: "becomes overripe"
+
+    - id: "R_RIPEN_3"
+      condition: "overripe for 1 turn"
+      action: "becomes rotten (removed)"
+
+  harvesting:
+    - id: "R_HARVEST_1"
+      condition: "your ripe fruit"
+      action: "can harvest (remove) to score 3 points"
+
+  spreading:
+    - id: "R_SPREAD_1"
+      condition: "rotten fruit"
+      action: "adjacent fruits ripen faster (+1 stage immediately)"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "score 15+ points from harvesting"
+
+description: |
+  Ripening models fruit maturation. Fruits ripen over time: unripe→ripe→overripe→rotten.
+  Harvest ripe fruit for points. Rotten fruit accelerates ripening of neighbors. Balance
+  timing: harvest at peak or let ripen to spread? Overripening loses opportunity. First to
+  15 points wins.
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 13-16

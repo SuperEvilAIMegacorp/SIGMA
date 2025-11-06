@@ -1,0 +1,69 @@
+game_id: "lifecycle_loop_051"
+name: "Lifecycle Loop"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "being"
+      colors: ["red", "blue"]
+      stages: ["birth", "growth", "peak", "decline", "rebirth"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place at birth stage"
+
+  lifecycle:
+    - id: "R_LIFE_1"
+      condition: "automatic progression"
+      action: "advances one stage per turn"
+
+    - id: "R_LIFE_2"
+      condition: "reaches decline"
+      action: "next stage is rebirth (loops back to birth)"
+
+  stage_powers:
+    - id: "R_BIRTH_1"
+      condition: "birth"
+      action: "can move, power=1"
+
+    - id: "R_GROWTH_1"
+      condition: "growth"
+      action: "can move, power=2"
+
+    - id: "R_PEAK_1"
+      condition: "peak"
+      action: "can move, power=3, captures lower power"
+
+    - id: "R_DECLINE_1"
+      condition: "decline"
+      action: "can move, power=1, vulnerable"
+
+    - id: "R_REBIRTH_1"
+      condition: "rebirth"
+      action: "teleports to any adjacent empty, then becomes birth"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "have 5 beings in peak stage simultaneously"
+
+description: |
+  Lifecycle Loop continuously cycles through stages. Birth→growth→peak→decline→rebirth→birth.
+  Each stage has different power. Peak is strongest but brief. Rebirth teleports then restarts.
+  Timing placements to align peaks is strategic. Win by having 5 peaks simultaneously.
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "medium"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 14-17

@@ -1,0 +1,67 @@
+game_id: "cascade_trigger_027"
+name: "Cascade Trigger"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "6x6"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "primed"
+          type: "boolean"
+          description: "Ready to trigger"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker, unprimed"
+
+  priming:
+    - id: "R_PRIME_1"
+      condition: "marker has exactly 2 friendly orthogonal neighbors"
+      action: "marker becomes primed"
+
+  trigger:
+    - id: "R_TRIGGER_1"
+      condition: "primed marker gets 3rd friendly neighbor"
+      action: "marker triggers (explodes), removing self and all orthogonal neighbors"
+
+  cascade:
+    - id: "R_CASCADE_1"
+      condition: "trigger removes markers"
+      action: "check if remaining markers now have 3+ neighbors and trigger"
+      effect: "chain reactions possible"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent triggers cascade that eliminates own king marker (last placed)"
+
+description: |
+  Cascade Trigger uses priming mechanics. Markers with exactly 2 neighbors become primed.
+  Adding a 3rd neighbor triggers explosion (removes self + orthogonal neighbors). Explosions
+  can cascade. Must carefully manage neighbor counts to avoid cascades or force opponent into
+  them. Last placed marker is your "king" - losing it loses game.
+
+interactions:
+  - rules: ["R_PRIME_1", "R_TRIGGER_1"]
+    type: "threshold_trigger"
+  - rules: ["R_TRIGGER_1", "R_CASCADE_1"]
+    type: "recursive"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 18-23

@@ -1,0 +1,18 @@
+game_id: "number_balance_085"
+name: "Number Balance"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Place numbers 1-9 in cells"
+  - id: "R2"
+    action: "Each row sum must equal 15"
+  - id: "R3"
+    action: "Each column sum must equal 15"
+  - id: "R4"
+    action: "No number used more than twice"
+
+win:
+  condition: "Fill board satisfying all constraints"
+
+minimal_scenarios: 18-22

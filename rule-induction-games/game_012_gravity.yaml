@@ -1,0 +1,68 @@
+game_id: "gravity_012"
+name: "Gravity"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+    orientation: "bottom_is_down"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "any column"
+      action: "place marker in column, falls to lowest empty space"
+      effect: "markers stack from bottom"
+
+  stability:
+    - id: "R_STABLE_1"
+      condition: "marker has no support (empty below)"
+      action: "marker falls to lowest empty position"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "3 vertically aligned same-color markers"
+      action: "capture all enemies between top and bottom of the 3"
+
+    - id: "R_CAPTURE_2"
+      condition: "4 horizontally aligned same-color markers"
+      action: "capture all enemies in that row"
+
+  gravity_cascade:
+    - id: "R_CASCADE_1"
+      condition: "markers removed, creating gaps"
+      action: "markers above fall to fill gaps"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no markers"
+
+description: |
+  Gravity uses column-drop placement like Connect-4. Markers fall to lowest position.
+  Three vertically aligned markers capture enemies between them. Four horizontally aligned
+  capture all enemies in that row. Captures create gaps, causing cascade falls. Must balance
+  vertical and horizontal threats while managing gravity effects.
+
+interactions:
+  - rules: ["R_PLACE_1", "R_STABLE_1"]
+    type: "automatic"
+  - rules: ["R_CAPTURE_1", "R_CASCADE_1"]
+    type: "triggering"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "medium"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 11-14

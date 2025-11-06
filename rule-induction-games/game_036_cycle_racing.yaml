@@ -1,0 +1,58 @@
+game_id: "cycle_racing_036"
+name: "Cycle Racing"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 10
+    cyclic: true
+
+  pieces:
+    - name: "runner"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  start:
+    - id: "R_START_1"
+      condition: "place 2 runners each on different nodes"
+
+  movement:
+    - id: "R_MOVE_1"
+      condition: "can move runner to adjacent node"
+      action: "move along edge"
+
+  blocking:
+    - id: "R_BLOCK_1"
+      condition: "enemy runner in your path"
+      action: "must stop, cannot pass"
+
+  cycle_completion:
+    - id: "R_CYCLE_1"
+      condition: "runner returns to starting node after visiting 5+ others"
+      action: "scores points = nodes visited"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "score 30+ points"
+
+description: |
+  Cycle Racing has runners moving around graph. Must complete cycles (return to start after
+  visiting 5+ nodes). Score equals nodes visited. Enemy runners block movement. Strategic
+  pathing and blocking. First to 30 points wins.
+
+interactions:
+  - rules: ["R_MOVE_1", "R_BLOCK_1"]
+    type: "movement_constraint"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "medium"
+  rule_interdependence: "medium"
+  edge_case_frequency: "low"
+
+minimal_scenarios_to_infer: 10-13

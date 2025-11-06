@@ -1,0 +1,61 @@
+game_id: "metamorphosis_046"
+name: "Metamorphosis"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "creature"
+      colors: ["red", "blue"]
+      states: ["larva", "pupa", "adult"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place larva"
+
+  transformation:
+    - id: "R_TRANSFORM_1"
+      condition: "larva survives 2 turns"
+      action: "becomes pupa"
+
+    - id: "R_TRANSFORM_2"
+      condition: "pupa survives 2 turns"
+      action: "becomes adult"
+
+  abilities:
+    - id: "R_LARVA_1"
+      condition: "larva state"
+      action: "can move 1 space"
+
+    - id: "R_PUPA_1"
+      condition: "pupa state"
+      action: "cannot move, immune to capture"
+
+    - id: "R_ADULT_1"
+      condition: "adult state"
+      action: "can move 2 spaces, captures adjacent enemies"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "have 3 adults on board"
+
+description: |
+  Metamorphosis features staged evolution. Place larvae, which transform to pupae (2 turns),
+  then adults (2 more turns). Larvae move slowly, pupae are immobile but immune, adults are
+  powerful. Win by having 3 adults simultaneously.
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "medium"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 12-15

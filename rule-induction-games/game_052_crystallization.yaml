@@ -1,0 +1,66 @@
+game_id: "crystallization_052"
+name: "Crystallization"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "crystal"
+      colors: ["red", "blue"]
+      states: ["liquid", "forming", "solid", "fractured"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place liquid crystal"
+
+  solidification:
+    - id: "R_SOLID_1"
+      condition: "liquid with 2+ friendly neighbors"
+      action: "becomes forming"
+
+    - id: "R_SOLID_2"
+      condition: "forming with 3+ friendly neighbors"
+      action: "becomes solid"
+
+  fracture:
+    - id: "R_FRACT_1"
+      condition: "solid with 2+ enemy neighbors"
+      action: "becomes fractured"
+
+    - id: "R_FRACT_2"
+      condition: "fractured"
+      action: "removed after 1 turn"
+
+  properties:
+    - id: "R_PROP_1"
+      condition: "solid crystal"
+      action: "cannot be moved or affected"
+
+    - id: "R_PROP_2"
+      condition: "forming/liquid"
+      action: "can be displaced by enemy placement"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "have 10 solid crystals"
+
+description: |
+  Crystallization transforms liquids to solids through neighbor density. Liquid→forming (2+
+  friends)→solid (3+ friends). Solid is permanent. But solids fracture near enemies (2+) and
+  are removed. Balance growth density with enemy pressure. First to 10 solids wins.
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 15-18

@@ -1,0 +1,18 @@
+game_id: "path_constraints_084"
+name: "Path Constraints"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Create path from start to end"
+  - id: "R2"
+    action: "Path must visit each region exactly once"
+  - id: "R3"
+    action: "Cannot cross own path"
+  - id: "R4"
+    action: "Must use exactly N turns (specified per puzzle)"
+
+win:
+  condition: "Complete valid path"
+
+minimal_scenarios: 17-21

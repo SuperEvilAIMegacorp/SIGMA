@@ -1,0 +1,58 @@
+game_id: "distance_duel_038"
+name: "Distance Duel"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 12
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty node"
+      action: "place marker"
+
+  distance_scoring:
+    - id: "R_SCORE_1"
+      condition: "pair of your markers"
+      action: "scores points = shortest_path_distance between them"
+
+  blocking:
+    - id: "R_BLOCK_1"
+      condition: "enemy marker on shortest path between your pair"
+      action: "path is blocked, distance becomes infinite (no score)"
+
+  multi_path:
+    - id: "R_MULTI_1"
+      condition: "multiple shortest paths exist"
+      action: "if any path is unblocked, score that distance"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "total distance score >= 40"
+
+description: |
+  Distance Duel scores pairs of your markers by distance between them. Enemies blocking
+  shortest paths nullify score. Multiple paths provide redundancy. Spread markers for distance
+  while enemies try to block. First to 40 total distance wins.
+
+interactions:
+  - rules: ["R_SCORE_1", "R_BLOCK_1"]
+    type: "score_negation"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 15-18

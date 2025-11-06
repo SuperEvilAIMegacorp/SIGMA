@@ -1,0 +1,16 @@
+game_id: "achievement_unlocks_078"
+name: "Achievement Unlocks"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Complete objectives to unlock achievements"
+  - id: "R2"
+    action: "Achievements unlock new capabilities and scoring multipliers"
+  - id: "R3"
+    action: "Some achievements chain (A unlocks B, B unlocks C)"
+
+win:
+  condition: "Unlock master achievement"
+
+minimal_scenarios: 17-20

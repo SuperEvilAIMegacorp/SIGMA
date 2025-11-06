@@ -1,0 +1,16 @@
+game_id: "interest_compound_080"
+name: "Interest Compound"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Points accumulate interest each turn (current_points × 0.15)"
+  - id: "R2"
+    action: "Can spend points for actions (reduces base for interest)"
+  - id: "R3"
+    action: "Balance spending vs saving for compound growth"
+
+win:
+  condition: "Reach 1000 points"
+
+minimal_scenarios: 13-16

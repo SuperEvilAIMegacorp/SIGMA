@@ -1,0 +1,81 @@
+game_id: "edge_control_030"
+name: "Edge Control"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "edge_distance"
+          type: "integer"
+          computed: true
+          description: "Minimum distance to any board edge"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker"
+
+  edge_power:
+    - id: "R_EDGE_1"
+      condition: "marker at edge (distance 0)"
+      action: "power = 3"
+
+    - id: "R_EDGE_2"
+      condition: "marker at distance 1 from edge"
+      action: "power = 2"
+
+    - id: "R_EDGE_3"
+      condition: "marker at distance 2+ from edge"
+      action: "power = 1"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "adjacent enemies, compare power"
+      action: "higher power captures lower power"
+
+    - id: "R_CAPTURE_2"
+      condition: "equal power"
+      action: "no capture"
+
+  edge_bonus:
+    - id: "R_BONUS_1"
+      condition: "control all 4 corner cells"
+      action: "all your markers get +1 power"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has < 3 markers"
+
+description: |
+  Edge Control gives power based on proximity to edges. Edge markers have power 3, distance
+  1 = power 2, center = power 1. Adjacent markers compare power, higher captures lower. Equal
+  power = stalemate. Controlling all 4 corners gives +1 power to all pieces. Balance edge
+  strength vs center control. Win by reducing opponent below 3 markers.
+
+interactions:
+  - rules: ["R_EDGE_1", "R_EDGE_2", "R_EDGE_3"]
+    type: "position_dependent"
+  - rules: ["R_EDGE_1", "R_CAPTURE_1"]
+    type: "enabling"
+  - rules: ["R_BONUS_1", "R_EDGE_1"]
+    type: "additive"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 12-15

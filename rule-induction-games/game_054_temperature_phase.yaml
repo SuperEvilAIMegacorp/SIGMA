@@ -1,0 +1,75 @@
+game_id: "temperature_phase_054"
+name: "Temperature Phase"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    cells:
+      - name: "temperature"
+        type: "integer"
+        range: "0-10"
+
+  pieces:
+    - name: "matter"
+      colors: ["red", "blue"]
+      phases: ["solid", "liquid", "gas"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place matter as solid, cell temp += 2"
+
+  phase_transition:
+    - id: "R_PHASE_1"
+      condition: "solid on cell temp >= 4"
+      action: "becomes liquid"
+
+    - id: "R_PHASE_2"
+      condition: "liquid on cell temp >= 7"
+      action: "becomes gas"
+
+    - id: "R_PHASE_3"
+      condition: "gas on cell temp >= 10"
+      action: "evaporates (removed), scores 3 points"
+
+  cooling:
+    - id: "R_COOL_1"
+      condition: "end of turn"
+      action: "all cell temps decrease by 1 (min 0)"
+
+  phase_abilities:
+    - id: "R_SOLID_1"
+      condition: "solid"
+      action: "cannot move, blocks"
+
+    - id: "R_LIQUID_1"
+      condition: "liquid"
+      action: "can flow to adjacent (move 1)"
+
+    - id: "R_GAS_1"
+      condition: "gas"
+      action: "can diffuse (move 2)"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "score 15+ points from evaporation"
+
+description: |
+  Temperature Phase tracks cell temperatures. Placement heats cells. Matter phase depends on
+  temp: solid (0-3), liquid (4-6), gas (7-9), evaporated (10+). Phases have mobility (solid=0,
+  liquid=1, gas=2). Temps cool each turn. Score by evaporating matter. Balance heating vs
+  cooling dynamics. First to 15 points wins.
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 17-21

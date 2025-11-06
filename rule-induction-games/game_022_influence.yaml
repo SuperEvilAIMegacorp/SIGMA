@@ -1,0 +1,71 @@
+game_id: "influence_022"
+name: "Influence"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "6x6"
+    topology: "orthogonal"
+    cells:
+      - name: "influence_score_red"
+        type: "integer"
+      - name: "influence_score_blue"
+        type: "integer"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker"
+
+  influence_calculation:
+    - id: "R_INFLUENCE_1"
+      condition: "after each placement"
+      action: "for each cell: influence = sum(1/distance²) for all markers of each color"
+      effect: "every cell has red_influence and blue_influence scores"
+
+  control:
+    - id: "R_CONTROL_1"
+      condition: "cell influence"
+      action: "cell controlled by color with higher influence score"
+      effect: "dynamic territory control"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy marker in cell where your influence > enemy influence"
+      action: "enemy marker captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "control 20+ cells"
+
+description: |
+  Influence uses field-effect scoring. Every cell has influence from all markers (1/distance²).
+  Higher influence = control that cell. Enemy markers in cells you control are captured.
+  Placement anywhere affects influence everywhere. Must balance spreading vs concentrating
+  power. First to control 20 cells wins.
+
+interactions:
+  - rules: ["R_PLACE_1", "R_INFLUENCE_1"]
+    type: "global_recalculation"
+  - rules: ["R_INFLUENCE_1", "R_CONTROL_1"]
+    type: "comparison"
+  - rules: ["R_CONTROL_1", "R_CAPTURE_1"]
+    type: "enabling"
+
+induction_difficulty:
+  observable_patterns: "very_high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "high"
+  edge_case_frequency: "low"
+
+minimal_scenarios_to_infer: 22-27

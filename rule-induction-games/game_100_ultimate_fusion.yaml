@@ -1,0 +1,18 @@
+game_id: "ultimate_fusion_100"
+name: "Ultimate Fusion"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines flux, cascade, resonance, phase, and accumulation"
+  - id: "R2"
+    action: "Each mechanic enables and modifies others"
+  - id: "R3"
+    action: "Flux affects resonance, resonance triggers cascades, cascades cause phase shifts, phases multiply accumulation"
+  - id: "R4"
+    action: "Maximum compositional complexity"
+
+win:
+  condition: "Master fusion: achieve threshold in all 5 mechanics simultaneously"
+
+minimal_scenarios: 25-30

@@ -1,0 +1,71 @@
+game_id: "conditional_move_025"
+name: "Conditional Move"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  game_state:
+    - name: "last_placement_quadrant"
+      type: "enum"
+      values: ["NW", "NE", "SW", "SE"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "depends on last opponent placement"
+      action: "if opponent placed in quadrant Q, you must place in opposite quadrant"
+      effect: "forced geographic response"
+
+  quadrant_definition:
+    - id: "R_QUAD_1"
+      description: "NW = A3-C5, NE = C3-E5, SW = A1-C3, SE = C1-E3"
+
+  first_move:
+    - id: "R_FIRST_1"
+      condition: "first move of game"
+      action: "can place anywhere"
+
+  opposite_quadrants:
+    - id: "R_OPPOSITE_1"
+      mapping: "NW ↔ SE, NE ↔ SW"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "3 orthogonally aligned same-color"
+      action: "capture all enemies between first and third marker"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no legal placements in required quadrant"
+
+description: |
+  Conditional Move enforces geographic constraints. After opponent places in quadrant Q, you
+  must place in opposite quadrant (NW↔SE, NE↔SW). Board divided into 4 overlapping quadrants.
+  Three aligned same-color captures enemies between them. Win by blocking opponent's required
+  quadrant. Forces positional thinking and setup.
+
+interactions:
+  - rules: ["R_PLACE_1", "R_OPPOSITE_1"]
+    type: "conditional_constraint"
+  - rules: ["R_PLACE_1", "WIN_1"]
+    type: "blocking_condition"
+
+induction_difficulty:
+  observable_patterns: "very_high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 18-22

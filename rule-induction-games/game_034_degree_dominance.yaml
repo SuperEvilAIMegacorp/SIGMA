@@ -1,0 +1,59 @@
+game_id: "degree_dominance_034"
+name: "Degree Dominance"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 15
+    irregular: true
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty node"
+      action: "place marker"
+
+  degree_power:
+    - id: "R_DEGREE_1"
+      condition: "marker on node with degree D"
+      action: "marker power = D"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "adjacent markers, compare power"
+      action: "higher power captures lower, equal = no capture"
+
+  hub_control:
+    - id: "R_HUB_1"
+      condition: "control node with degree >= 5"
+      action: "can move any of your markers 2 edges away"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "control all degree-4+ nodes"
+
+description: |
+  Degree Dominance uses irregular graph where nodes have different connection counts (degree).
+  Marker power equals node degree. Adjacent comparison captures lower power. High-degree hubs
+  (5+) enable movement. Win by controlling all high-degree nodes. Topology strategy critical.
+
+interactions:
+  - rules: ["R_DEGREE_1", "R_CAPTURE_1"]
+    type: "power_comparison"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 13-16

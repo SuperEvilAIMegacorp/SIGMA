@@ -1,0 +1,83 @@
+game_id: "decay_019"
+name: "Decay"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "age"
+          type: "integer"
+          description: "Turns since placement"
+        - name: "vitality"
+          type: "integer"
+          range: "0-5"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker with age=0, vitality=5"
+
+  aging:
+    - id: "R_AGE_1"
+      condition: "end of turn"
+      action: "age += 1 for all markers"
+
+  decay:
+    - id: "R_DECAY_1"
+      condition: "marker with age = N"
+      action: "vitality = max(0, 5 - N)"
+      effect: "markers weaken over time"
+
+  reinforcement:
+    - id: "R_REINFORCE_1"
+      condition: "marker with 2+ friendly orthogonal neighbors"
+      action: "vitality += 1 (max 5)"
+      effect: "clusters slow decay"
+
+  death:
+    - id: "R_DEATH_1"
+      condition: "vitality = 0"
+      action: "marker removed from board"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "place adjacent to enemy with lower vitality"
+      action: "enemy marker captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no markers"
+
+description: |
+  Decay introduces aging mechanics. Markers start with vitality 5, decay by 1 per turn. At
+  vitality 0, marker dies. Clusters (2+ neighbors) reinforce, slowing decay. New placement
+  adjacent to weaker enemy captures it. Must maintain clusters to survive while targeting
+  weak enemies. Win by surviving longer than opponent.
+
+interactions:
+  - rules: ["R_AGE_1", "R_DECAY_1"]
+    type: "automatic"
+  - rules: ["R_REINFORCE_1", "R_DECAY_1"]
+    type: "counteracting"
+  - rules: ["R_DECAY_1", "R_DEATH_1"]
+    type: "threshold_trigger"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 14-17

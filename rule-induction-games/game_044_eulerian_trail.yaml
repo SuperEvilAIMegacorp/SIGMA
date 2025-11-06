@@ -1,0 +1,65 @@
+game_id: "eulerian_trail_044"
+name: "Eulerian Trail"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 10
+
+  pieces:
+    - name: "tracer"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  start:
+    - id: "R_START_1"
+      condition: "place tracer on any node"
+
+  movement:
+    - id: "R_MOVE_1"
+      condition: "move tracer along edge"
+      action: "mark edge as used (cannot reuse)"
+
+  eulerian_condition:
+    - id: "R_EULER_1"
+      condition: "node has odd degree"
+      action: "can start/end trail there"
+
+    - id: "R_EULER_2"
+      condition: "node has even degree"
+      action: "must pass through (can't start/end)"
+
+  completion:
+    - id: "R_COMPLETE_1"
+      condition: "use all edges exactly once"
+      action: "scores 20 points"
+
+    - id: "R_COMPLETE_2"
+      condition: "get stuck (no unused edges from current node)"
+      action: "score = edges used"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "score >= 15"
+
+description: |
+  Eulerian Trail challenges players to traverse all edges exactly once. Odd-degree nodes can
+  start/end, even-degree must pass through. Mark used edges. Complete trail scores 20, getting
+  stuck scores edges used. Understanding Eulerian properties crucial. First to 15 points wins.
+
+interactions:
+  - rules: ["R_EULER_1", "R_MOVE_1"]
+    type: "topological_constraint"
+
+induction_difficulty:
+  observable_patterns: "very_high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 18-23

@@ -1,0 +1,14 @@
+game_id: "prediction_duel_070"
+name: "Prediction Duel"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Predict opponent action and choose your action"
+  - id: "R2"
+    action: "Correct prediction scores bonus points"
+
+win:
+  condition: "Score 30+ points"
+
+minimal_scenarios: 13-16

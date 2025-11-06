@@ -1,0 +1,65 @@
+game_id: "clique_formation_039"
+name: "Clique Formation"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 10
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty node"
+      action: "place marker"
+
+  clique_detection:
+    - id: "R_CLIQUE_1"
+      condition: "K markers all pairwise adjacent"
+      action: "forms K-clique"
+
+  clique_scoring:
+    - id: "R_SCORE_1"
+      condition: "form 3-clique (triangle)"
+      action: "score 3 points"
+
+    - id: "R_SCORE_2"
+      condition: "form 4-clique"
+      action: "score 10 points"
+
+  blocking:
+    - id: "R_BLOCK_1"
+      condition: "enemy marker adjacent to all in your near-clique"
+      action: "enemy placement blocks clique completion"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "form 4-clique"
+
+    - id: "WIN_2"
+      condition: "score 20+ points from triangles"
+
+description: |
+  Clique Formation rewards fully connected subgraphs. Triangles (3-cliques) score 3 points.
+  4-cliques score 10 and win instantly. Enemies can block by placing adjacent to prevent
+  completion. Strategic placement seeks clique opportunities while blocking opponent.
+
+interactions:
+  - rules: ["R_CLIQUE_1", "R_SCORE_1"]
+    type: "pattern_recognition_scoring"
+
+induction_difficulty:
+  observable_patterns: "very_high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 16-20

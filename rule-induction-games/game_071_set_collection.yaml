@@ -1,0 +1,14 @@
+game_id: "set_collection_071"
+name: "Set Collection"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Collect markers of different types"
+  - id: "R2"
+    action: "Complete sets score exponentially (3=5pts, 4=10pts, 5=20pts)"
+
+win:
+  condition: "Score 50+ points"
+
+minimal_scenarios: 11-14

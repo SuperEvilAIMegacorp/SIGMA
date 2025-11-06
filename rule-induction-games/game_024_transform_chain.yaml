@@ -1,0 +1,78 @@
+game_id: "transform_chain_024"
+name: "Transform Chain"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "form"
+          type: "enum"
+          values: ["seed", "sprout", "bloom"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker in seed form"
+
+  transformation:
+    - id: "R_TRANSFORM_1"
+      condition: "seed with 1 friendly orthogonal neighbor"
+      action: "transforms to sprout"
+
+    - id: "R_TRANSFORM_2"
+      condition: "sprout with 2+ friendly orthogonal neighbors"
+      action: "transforms to bloom"
+
+  form_abilities:
+    - id: "R_SEED_1"
+      condition: "seed form"
+      action: "no special abilities"
+
+    - id: "R_SPROUT_1"
+      condition: "sprout form"
+      action: "cannot be captured by seeds or sprouts"
+
+    - id: "R_BLOOM_1"
+      condition: "bloom form"
+      action: "captures adjacent enemy seeds and sprouts"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "bloom form adjacent to weaker enemy"
+      action: "enemy captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "have 3 blooms on board simultaneously"
+
+description: |
+  Transform Chain uses evolutionary forms. Place seeds, which transform to sprouts (1
+  neighbor), then blooms (2+ neighbors). Sprouts resist capture from seeds/sprouts. Blooms
+  capture seeds/sprouts adjacent to them. Building clusters enables transformations while
+  protecting pieces. First to have 3 blooms wins.
+
+interactions:
+  - rules: ["R_TRANSFORM_1", "R_TRANSFORM_2"]
+    type: "sequential_transformation"
+  - rules: ["R_TRANSFORM_2", "R_BLOOM_1"]
+    type: "enabling"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 13-16

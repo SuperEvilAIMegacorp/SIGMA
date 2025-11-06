@@ -1,0 +1,18 @@
+game_id: "territory_limits_086"
+name: "Territory Limits"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Divide board into territories"
+  - id: "R2"
+    action: "Each territory must have exactly 4 cells"
+  - id: "R3"
+    action: "Each territory must contain exactly one high-value cell"
+  - id: "R4"
+    action: "Territories must be orthogonally connected"
+
+win:
+  condition: "Valid partition of entire board"
+
+minimal_scenarios: 16-20

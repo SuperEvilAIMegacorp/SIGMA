@@ -1,0 +1,63 @@
+game_id: "aging_cycle_047"
+name: "Aging Cycle"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "age"
+          values: ["young", "mature", "elder", "ancient"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place young marker"
+
+  aging:
+    - id: "R_AGE_1"
+      condition: "each turn"
+      action: "all markers age one stage"
+
+  age_abilities:
+    - id: "R_YOUNG_1"
+      condition: "young"
+      action: "vulnerable to capture"
+
+    - id: "R_MATURE_1"
+      condition: "mature"
+      action: "standard, can capture young/elder"
+
+    - id: "R_ELDER_1"
+      condition: "elder"
+      action: "cannot be captured by young, scores 2 points"
+
+    - id: "R_ANCIENT_1"
+      condition: "ancient"
+      action: "removed from board, scores 5 points"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "score 20+ points"
+
+description: |
+  Aging Cycle advances all markers each turn through life stages. Young are vulnerable,
+  mature are standard, elders resist young and score points, ancients are removed but score
+  highest. Balance placement timing with aging dynamics. First to 20 points wins.
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 13-16

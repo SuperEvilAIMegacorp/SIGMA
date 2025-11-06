@@ -1,0 +1,16 @@
+game_id: "network_transformation_099"
+name: "Network Transformation"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines graph networks with piece transformation"
+  - id: "R2"
+    action: "Network topology affects transformation rules"
+  - id: "R3"
+    action: "Transformations can reshape network"
+
+win:
+  condition: "Transform network into target configuration"
+
+minimal_scenarios: 20-24

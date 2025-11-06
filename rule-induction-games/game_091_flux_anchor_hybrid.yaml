@@ -1,0 +1,16 @@
+game_id: "flux_anchor_hybrid_091"
+name: "Flux Anchor Hybrid"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines flux charge mechanics with anchor stability"
+  - id: "R2"
+    action: "High flux charges markers, anchored markers stabilize neighbors"
+  - id: "R3"
+    action: "Anchored flux creates powerful combinations"
+
+win:
+  condition: "Achieve 5 anchored flux-3+ markers"
+
+minimal_scenarios: 18-22

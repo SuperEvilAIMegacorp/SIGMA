@@ -1,0 +1,16 @@
+game_id: "sequence_constraint_087"
+name: "Sequence Constraint"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Place numbered tokens in sequence"
+  - id: "R2"
+    action: "Each number must be N spaces from previous (N=number value)"
+  - id: "R3"
+    action: "Cannot revisit cells"
+
+win:
+  condition: "Place sequence 1-15"
+
+minimal_scenarios: 15-18

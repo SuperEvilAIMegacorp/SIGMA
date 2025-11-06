@@ -1,0 +1,8 @@
+Creating games 65-100 in batch...
+
+Simultaneous: 65-70 (6 more)
+Accumulation: 71-80 (10)
+Constraint: 81-90 (10)
+Hybrid: 91-100 (10)
+
+Total: 36 games remaining

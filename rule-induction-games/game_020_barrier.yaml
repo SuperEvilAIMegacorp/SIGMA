@@ -1,0 +1,77 @@
+game_id: "barrier_020"
+name: "Barrier"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+    - name: "wall"
+      colors: ["neutral"]
+      properties:
+        - name: "strength"
+          type: "integer"
+          range: "1-3"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker OR place wall (strength determined by adjacent friendlies)"
+
+  wall_creation:
+    - id: "R_WALL_1"
+      condition: "player chooses to place wall"
+      action: "wall strength = number of friendly markers orthogonally adjacent"
+      effect: "stronger walls harder to break"
+
+  wall_blocking:
+    - id: "R_BLOCK_1"
+      condition: "wall exists"
+      action: "markers cannot be placed on wall cells"
+      effect: "walls block placement"
+
+  wall_breaking:
+    - id: "R_BREAK_1"
+      condition: "wall surrounded by 2*strength enemy markers"
+      action: "wall destroyed"
+      effect: "cell becomes empty"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy marker enclosed by walls and friendly markers"
+      action: "enemy captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has < 3 markers"
+
+description: |
+  Barrier allows placing walls instead of markers. Wall strength equals adjacent friendly
+  markers at creation. Walls block placement. Walls break when surrounded by 2*strength
+  enemies. Enemies enclosed by walls+markers are captured. Strategic wall placement controls
+  territory and traps enemies. Win by reducing opponent below 3 markers.
+
+interactions:
+  - rules: ["R_PLACE_1", "R_WALL_1"]
+    type: "alternative_action"
+  - rules: ["R_WALL_1", "R_BREAK_1"]
+    type: "strength_comparison"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 15-18

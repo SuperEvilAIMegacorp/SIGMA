@@ -1,0 +1,70 @@
+game_id: "colorful_paths_043"
+name: "Colorful Paths"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 12
+    edges:
+      - name: "color"
+        type: "enum"
+        values: ["red", "blue", "green", "yellow"]
+
+  pieces:
+    - name: "pawn"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  start:
+    - id: "R_START_1"
+      condition: "place pawn on any node"
+
+  movement:
+    - id: "R_MOVE_1"
+      condition: "pawn can move along edge"
+      action: "record edge color used"
+
+  color_restriction:
+    - id: "R_RESTRICT_1"
+      condition: "moving pawn"
+      action: "cannot use same color edge twice in a row"
+
+  scoring:
+    - id: "R_SCORE_1"
+      condition: "path uses all 4 colors"
+      action: "score 10 points"
+
+    - id: "R_SCORE_2"
+      condition: "reach designated goal node"
+      action: "score 5 points"
+
+  blocking:
+    - id: "R_BLOCK_1"
+      condition: "enemy pawn on node"
+      action: "cannot enter that node"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "score 20+ points"
+
+description: |
+  Colorful Paths has multi-colored edges. Move pawns but cannot repeat edge color consecutively.
+  Using all 4 colors in path scores 10. Reaching goal scores 5. Enemies block nodes. Strategic
+  path planning considers color sequences. First to 20 points wins.
+
+interactions:
+  - rules: ["R_MOVE_1", "R_RESTRICT_1"]
+    type: "sequential_constraint"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 15-18

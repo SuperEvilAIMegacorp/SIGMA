@@ -1,0 +1,18 @@
+game_id: "knapsack_puzzle_090"
+name: "Knapsack Puzzle"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Select items with values and weights"
+  - id: "R2"
+    action: "Total weight must not exceed capacity (20)"
+  - id: "R3"
+    action: "Must include at least one item from each category"
+  - id: "R4"
+    action: "Maximize total value"
+
+win:
+  condition: "Value ≥50 within constraints"
+
+minimal_scenarios: 15-18

@@ -1,0 +1,16 @@
+game_id: "resource_engine_072"
+name: "Resource Engine"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Generators produce resources each turn"
+  - id: "R2"
+    action: "Resources buy upgrades that produce more resources"
+  - id: "R3"
+    action: "Exponential growth possible"
+
+win:
+  condition: "Produce 100 resources in single turn"
+
+minimal_scenarios: 14-17

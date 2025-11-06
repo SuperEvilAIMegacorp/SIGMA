@@ -1,0 +1,66 @@
+game_id: "spanning_tree_035"
+name: "Spanning Tree"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 12
+    complete: true
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty node"
+      action: "place marker"
+
+  tree_formation:
+    - id: "R_TREE_1"
+      condition: "your markers must form tree (no cycles)"
+      action: "placement that creates cycle is illegal"
+
+  leaf_bonus:
+    - id: "R_LEAF_1"
+      condition: "your marker is leaf (degree 1 in your tree)"
+      action: "scores 2 points"
+
+    - id: "R_LEAF_2"
+      condition: "your marker is internal (degree 2+)"
+      action: "scores 1 point"
+
+  pruning:
+    - id: "R_PRUNE_1"
+      condition: "remove your leaf marker"
+      action: "can remove leaf to prevent enemy connection"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "your tree spans all nodes (12)"
+
+    - id: "WIN_2"
+      condition: "score >= 20 points"
+
+description: |
+  Spanning Tree requires markers form tree (acyclic). Cannot create cycles. Leaves score 2,
+  internal nodes score 1. Can prune own leaves strategically. Win by spanning all nodes or
+  reaching 20 points. Balance growth vs structure optimization.
+
+interactions:
+  - rules: ["R_TREE_1", "R_PLACE_1"]
+    type: "structural_constraint"
+
+induction_difficulty:
+  observable_patterns: "very_high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 18-22

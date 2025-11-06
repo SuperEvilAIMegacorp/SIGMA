@@ -1,0 +1,68 @@
+game_id: "echo_007"
+name: "Echo"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  game_state:
+    - name: "echo_pattern"
+      type: "list"
+      description: "Last 3 moves (color, position)"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker"
+
+  echo_constraint:
+    - id: "R_ECHO_1"
+      condition: "attempted placement matches a position in last 3 moves"
+      action: "placement blocked"
+      effect: "cannot echo recent placements"
+
+    - id: "R_ECHO_2"
+      condition: "attempted placement is orthogonally adjacent to position in echo_pattern"
+      action: "placement costs 2 turns (skip next turn)"
+      effect: "near-echo has penalty"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "marker orthogonally surrounded by 4 enemies"
+      action: "capture"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent cannot make legal move"
+
+description: |
+  Echo tracks the last 3 moves (both players). You cannot place on cells used in the last
+  3 moves. Placing adjacent to recent moves costs 2 turns (you skip your next turn). This
+  creates temporal constraints where recent history affects legal moves. Standard capture
+  by 4-way surround. Win by blocking opponent's moves.
+
+interactions:
+  - rules: ["R_PLACE_1", "R_ECHO_1"]
+    type: "blocking"
+  - rules: ["R_ECHO_2", "R_PLACE_1"]
+    type: "cost_modification"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 15-20

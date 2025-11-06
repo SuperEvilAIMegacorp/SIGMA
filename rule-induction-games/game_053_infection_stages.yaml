@@ -1,0 +1,67 @@
+game_id: "infection_stages_053"
+name: "Infection Stages"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "cell"
+      colors: ["red", "blue"]
+      infection: ["healthy", "exposed", "infected", "contagious", "immune"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place healthy cell"
+
+  exposure:
+    - id: "R_EXPOSE_1"
+      condition: "healthy adjacent to enemy infected/contagious"
+      action: "becomes exposed"
+
+  infection_progression:
+    - id: "R_PROG_1"
+      condition: "exposed for 1 turn"
+      action: "becomes infected"
+
+    - id: "R_PROG_2"
+      condition: "infected for 1 turn"
+      action: "becomes contagious"
+
+    - id: "R_PROG_3"
+      condition: "contagious for 2 turns"
+      action: "becomes immune"
+
+  spreading:
+    - id: "R_SPREAD_1"
+      condition: "contagious"
+      action: "exposes all adjacent healthy enemies (2-space range)"
+
+  immunity:
+    - id: "R_IMMUNE_1"
+      condition: "immune"
+      action: "cannot be infected, blocks spread through it"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "all opponent cells infected or immune"
+
+description: |
+  Infection Stages models disease spread. Cells progress: healthy→exposed→infected→contagious
+  →immune. Contagious spreads to healthy enemies. Immune blocks spread. Strategic placement
+  either spreads infection or creates immune barriers. Win by infecting all enemy cells.
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 16-20

@@ -1,0 +1,59 @@
+game_id: "bridge_battle_040"
+name: "Bridge Battle"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 12
+    articulation_points: true
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty node"
+      action: "place marker"
+
+  bridge_identification:
+    - id: "R_BRIDGE_1"
+      condition: "your marker on articulation point (removing disconnects graph)"
+      action: "marker becomes bridge"
+
+  bridge_power:
+    - id: "R_POWER_1"
+      condition: "bridge marker"
+      action: "controls both components it connects"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "place marker isolating enemy component"
+      action: "all enemies in isolated component captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "control 3+ bridges"
+
+description: |
+  Bridge Battle identifies articulation points (nodes whose removal disconnects graph). Markers
+  on these become bridges, controlling both components. Isolating enemy components captures
+  them. Win by controlling 3 bridges. Topology analysis critical for finding strategic nodes.
+
+interactions:
+  - rules: ["R_BRIDGE_1", "R_POWER_1"]
+    type: "topological_bonus"
+
+induction_difficulty:
+  observable_patterns: "very_high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 17-21

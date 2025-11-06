@@ -1,0 +1,62 @@
+game_id: "colored_edges_033"
+name: "Colored Edges"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 10
+    edges:
+      - name: "color"
+        type: "enum"
+        values: ["red", "blue", "neutral"]
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty node"
+      action: "place marker"
+
+  edge_coloring:
+    - id: "R_COLOR_1"
+      condition: "both endpoints of edge have same color markers"
+      action: "edge becomes that color"
+
+  traverse_rule:
+    - id: "R_TRAVERSE_1"
+      condition: "moving marker"
+      action: "can only traverse edges of your color or neutral"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy marker isolated (no neutral/friendly edges)"
+      action: "enemy captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has < 2 markers"
+
+description: |
+  Colored Edges dynamically colors edges based on endpoints. Both endpoints same color =
+  edge becomes that color. Markers can only traverse own-colored or neutral edges. Isolating
+  enemies (no traversable edges) captures them. Control edge network to trap opponents.
+
+interactions:
+  - rules: ["R_COLOR_1", "R_TRAVERSE_1"]
+    type: "enabling_constraint"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 15-18

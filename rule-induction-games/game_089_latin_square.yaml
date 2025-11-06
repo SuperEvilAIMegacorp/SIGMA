@@ -1,0 +1,18 @@
+game_id: "latin_square_089"
+name: "Latin Square"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Fill grid with symbols"
+  - id: "R2"
+    action: "Each symbol appears exactly once per row"
+  - id: "R3"
+    action: "Each symbol appears exactly once per column"
+  - id: "R4"
+    action: "Competitive: players alternate filling, invalid placement loses"
+
+win:
+  condition: "Opponent makes invalid placement"
+
+minimal_scenarios: 14-17

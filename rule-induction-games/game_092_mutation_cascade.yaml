@@ -1,0 +1,16 @@
+game_id: "mutation_cascade_092"
+name: "Mutation Cascade"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines mutation accumulation with cascade triggers"
+  - id: "R2"
+    action: "Mutations enable new cascade abilities"
+  - id: "R3"
+    action: "Cascades accelerate mutation rate"
+
+win:
+  condition: "Trigger mutation cascade chain of 10+"
+
+minimal_scenarios: 19-23

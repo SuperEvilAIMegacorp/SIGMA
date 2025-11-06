@@ -1,0 +1,16 @@
+game_id: "n_queens_081"
+name: "N-Queens Variant"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Place pieces on board following constraints"
+  - id: "R2"
+    action: "No two pieces can attack each other (queen-like movement)"
+  - id: "R3"
+    action: "Additional constraints: max 2 per row/column/diagonal"
+
+win:
+  condition: "Place 12 pieces successfully"
+
+minimal_scenarios: 15-18

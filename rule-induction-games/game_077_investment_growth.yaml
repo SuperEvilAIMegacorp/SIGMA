@@ -1,0 +1,18 @@
+game_id: "investment_growth_077"
+name: "Investment Growth"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Invest tokens in growth tracks"
+  - id: "R2"
+    action: "Each turn, investments grow by 10% (compound)"
+  - id: "R3"
+    action: "Can cash out investments at any time for current value"
+  - id: "R4"
+    action: "Risk: enemy actions can reduce investment values"
+
+win:
+  condition: "Cash out 500+ value"
+
+minimal_scenarios: 16-19

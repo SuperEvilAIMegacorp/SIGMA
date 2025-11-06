@@ -1,0 +1,67 @@
+game_id: "combustion_060"
+name: "Combustion"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "material"
+      colors: ["red", "blue"]
+      states: ["cold", "warm", "hot", "burning", "ash"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place cold material"
+
+  heating:
+    - id: "R_HEAT_1"
+      condition: "cold adjacent to warm"
+      action: "becomes warm"
+
+    - id: "R_HEAT_2"
+      condition: "warm adjacent to hot"
+      action: "becomes hot"
+
+    - id: "R_HEAT_3"
+      condition: "hot adjacent to burning"
+      action: "becomes burning"
+
+  burning:
+    - id: "R_BURN_1"
+      condition: "burning material"
+      action: "spreads to all adjacent materials (+1 heat stage)"
+
+    - id: "R_BURN_2"
+      condition: "burning for 1 turn"
+      action: "becomes ash (removed), scores 2 points"
+
+  ignition:
+    - id: "R_IGNITE_1"
+      condition: "hot with 3+ adjacent hot materials"
+      action: "ignites to burning"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "score 20+ points from combustion"
+
+description: |
+  Combustion models fire spread. Materials heat through contact: cold→warm→hot→burning→ash.
+  Burning spreads heat rapidly. Hot materials with 3+ hot neighbors ignite. Burning scores
+  points when it becomes ash. Chain reactions possible. Balance controlled burning vs
+  runaway fires. First to 20 points wins.
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 16-19

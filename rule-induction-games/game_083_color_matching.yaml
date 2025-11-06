@@ -1,0 +1,16 @@
+game_id: "color_matching_083"
+name: "Color Matching"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Adjacent pieces must have different colors"
+  - id: "R2"
+    action: "Pieces 2 spaces apart must have matching colors"
+  - id: "R3"
+    action: "Diagonal neighbors can be any color"
+
+win:
+  condition: "Place 20 pieces without violations"
+
+minimal_scenarios: 14-17

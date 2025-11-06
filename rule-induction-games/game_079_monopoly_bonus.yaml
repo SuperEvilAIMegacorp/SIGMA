@@ -1,0 +1,16 @@
+game_id: "monopoly_bonus_079"
+name: "Monopoly Bonus"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Control sets of related properties"
+  - id: "R2"
+    action: "Complete monopoly (all in set) multiplies value by set size"
+  - id: "R3"
+    action: "Partial sets score linear, complete sets score exponential"
+
+win:
+  condition: "Total value 300+"
+
+minimal_scenarios: 14-17

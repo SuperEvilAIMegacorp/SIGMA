@@ -1,0 +1,50 @@
+game_id: "simultaneous_bid_061"
+name: "Simultaneous Bid"
+category: "simultaneous_action"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    cells:
+      - name: "value"
+        type: "integer"
+        range: "1-10"
+
+  players:
+    count: 2
+    turn_order: "simultaneous"
+    resources:
+      - name: "bid_tokens"
+        starting: 20
+
+rules:
+  bidding:
+    - id: "R_BID_1"
+      action: "both players secretly bid tokens on cells"
+
+  resolution:
+    - id: "R_RESOLVE_1"
+      condition: "higher bid wins cell"
+      action: "place marker, score cell value"
+
+    - id: "R_RESOLVE_2"
+      condition: "tied bid"
+      action: "neither wins, tokens refunded"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "score 50+ points"
+
+description: |
+  Simultaneous Bid has players bidding tokens on cells secretly. Reveal simultaneously, higher
+  bid wins cell and scores its value. Tied bids refund tokens. Balance high-value targets vs
+  token conservation. First to 50 points wins.
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "medium"
+  rule_interdependence: "medium"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 10-13

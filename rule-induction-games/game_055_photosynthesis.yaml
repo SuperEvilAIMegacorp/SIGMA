@@ -1,0 +1,72 @@
+game_id: "photosynthesis_055"
+name: "Photosynthesis"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "6x6"
+    cells:
+      - name: "light_level"
+        type: "integer"
+        range: "0-5"
+
+  pieces:
+    - name: "plant"
+      colors: ["red", "blue"]
+      stages: ["seed", "sprout", "sapling", "tree"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place seed"
+
+  light_calculation:
+    - id: "R_LIGHT_1"
+      condition: "cell light = 5 - (number of pieces blocking from north edge)"
+      action: "calculates available light"
+
+  growth:
+    - id: "R_GROWTH_1"
+      condition: "seed with light >= 2 for 1 turn"
+      action: "becomes sprout"
+
+    - id: "R_GROWTH_2"
+      condition: "sprout with light >= 3 for 1 turn"
+      action: "becomes sapling"
+
+    - id: "R_GROWTH_3"
+      condition: "sapling with light >= 4 for 2 turns"
+      action: "becomes tree"
+
+  shading:
+    - id: "R_SHADE_1"
+      condition: "tree"
+      action: "blocks light to cells south of it"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy plant with light < 1"
+      action: "withers (removed)"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "have 4 trees"
+
+description: |
+  Photosynthesis models light-dependent growth. Light comes from north, blocked by pieces.
+  Plants grow based on light: seed→sprout (light 2+)→sapling (light 3+)→tree (light 4+).
+  Trees shade cells south, potentially withering enemies. Balance growth vs shading strategy.
+  First to 4 trees wins.
+
+induction_difficulty:
+  observable_patterns: "very_high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 18-22

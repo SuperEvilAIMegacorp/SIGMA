@@ -1,0 +1,14 @@
+game_id: "sealed_bids_066"
+name: "Sealed Bids"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Bid power on locations, higher bid wins"
+  - id: "R2"
+    action: "Winning bid scores location value minus bid cost"
+
+win:
+  condition: "Score 40+ points"
+
+minimal_scenarios: 10-13

@@ -1,0 +1,64 @@
+game_id: "bipartite_control_041"
+name: "Bipartite Control"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    bipartite: true
+    left_nodes: 6
+    right_nodes: 6
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty node"
+      action: "place marker"
+
+  side_rule:
+    - id: "R_SIDE_1"
+      condition: "markers on left side"
+      action: "can only capture right side enemies"
+
+    - id: "R_SIDE_2"
+      condition: "markers on right side"
+      action: "can only capture left side enemies"
+
+  matching:
+    - id: "R_MATCH_1"
+      condition: "your marker on each side of an edge"
+      action: "edge is matched, captures any enemy on that edge"
+
+  domination:
+    - id: "R_DOM_1"
+      condition: "all neighbors of enemy are your markers"
+      action: "enemy dominated, captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "control both sides (3+ markers each)"
+
+description: |
+  Bipartite Control uses graph with two sides (only cross-side edges). Markers on one side
+  capture opposite side. Matching (marker on each side of edge) captures enemies on that edge.
+  Dominating (all neighbors controlled) captures enemy. Win by controlling both sides (3+ each).
+
+interactions:
+  - rules: ["R_SIDE_1", "R_MATCH_1"]
+    type: "cross_side_interaction"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 14-17

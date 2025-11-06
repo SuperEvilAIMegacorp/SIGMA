@@ -1,0 +1,74 @@
+game_id: "sacrifice_023"
+name: "Sacrifice"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+    resources:
+      - name: "power"
+        type: "integer"
+        starting: 0
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker"
+
+  sacrifice:
+    - id: "R_SACRIFICE_1"
+      condition: "remove one of your markers"
+      action: "gain power = number of friendly orthogonal neighbors it had"
+      effect: "convert position to power"
+
+  power_placement:
+    - id: "R_POWER_1"
+      condition: "spend N power"
+      action: "place N markers simultaneously (must form connected group)"
+      effect: "explosive expansion"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy marker surrounded by 4 orthogonal friendlies"
+      action: "capture enemy"
+
+  power_capture:
+    - id: "R_POWER_2"
+      condition: "spend 3 power"
+      action: "remove any enemy marker"
+      effect: "direct elimination"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no markers"
+
+description: |
+  Sacrifice introduces resource conversion. Remove your markers to gain power equal to their
+  neighbor count. Spend power to place multiple markers at once (must connect) or remove
+  enemies (3 power). Strategic sacrificing of well-connected markers generates power for
+  explosive plays. Balance board presence vs stored power. Win by eliminating opponent.
+
+interactions:
+  - rules: ["R_SACRIFICE_1", "R_POWER_1"]
+    type: "resource_generation_spending"
+  - rules: ["R_SACRIFICE_1", "R_POWER_2"]
+    type: "alternative_use"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 14-17

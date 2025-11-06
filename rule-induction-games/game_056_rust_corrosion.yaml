@@ -1,0 +1,63 @@
+game_id: "rust_corrosion_056"
+name: "Rust Corrosion"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "metal"
+      colors: ["red", "blue"]
+      condition: ["pristine", "tarnished", "rusted", "corroded"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place pristine metal"
+
+  corrosion:
+    - id: "R_CORRODE_1"
+      condition: "pristine adjacent to enemy"
+      action: "becomes tarnished"
+
+    - id: "R_CORRODE_2"
+      condition: "tarnished adjacent to 2+ enemies"
+      action: "becomes rusted"
+
+    - id: "R_CORRODE_3"
+      condition: "rusted adjacent to 3+ enemies"
+      action: "becomes corroded (removed)"
+
+  protection:
+    - id: "R_PROTECT_1"
+      condition: "pristine with 2+ friendly neighbors"
+      action: "immune to tarnishing"
+
+  restoration:
+    - id: "R_RESTORE_1"
+      condition: "sacrifice pristine adjacent to tarnished/rusted"
+      action: "restored to pristine, sacrificed piece removed"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has < 3 pristine metals"
+
+description: |
+  Rust Corrosion degrades metals near enemies. Pristine→tarnished (1 enemy)→rusted (2+
+  enemies)→corroded/removed (3+ enemies). Protection (2+ friends) prevents tarnishing.
+  Can sacrifice pristine to restore damaged metals. Balance attack pressure vs protection.
+  Win by corroding opponent to < 3 pristine.
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 15-18

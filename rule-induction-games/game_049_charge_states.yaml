@@ -1,0 +1,60 @@
+game_id: "charge_states_049"
+name: "Charge States"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "cell"
+      colors: ["red", "blue"]
+      charge: [-2, -1, 0, +1, +2]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place cell with charge 0"
+
+  charging:
+    - id: "R_CHARGE_1"
+      condition: "adjacent to friendly"
+      action: "charge increases by +1 (max +2)"
+
+  discharging:
+    - id: "R_DISCHARGE_1"
+      condition: "adjacent to enemy"
+      action: "charge decreases by -1 (min -2)"
+
+  discharge_capture:
+    - id: "R_CAPTURE_1"
+      condition: "cell reaches charge -2"
+      action: "cell removed (discharged)"
+
+  overcharge:
+    - id: "R_OVERCHARGE_1"
+      condition: "cell reaches +2 AND has 3+ friendly neighbors"
+      action: "explodes, converts adjacent enemies to friendly charge 0"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no cells"
+
+description: |
+  Charge States tracks charge levels. Cells charge up near friends (+1), discharge near enemies
+  (-1). At -2, cells are removed. At +2 with 3+ friends, cells explode converting adjacent
+  enemies. Balance clustering for charge vs spreading to avoid enemy discharge. Win by
+  eliminating opponents.
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 15-18

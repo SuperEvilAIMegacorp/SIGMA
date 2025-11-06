@@ -1,0 +1,16 @@
+game_id: "constraint_transformation_098"
+name: "Constraint Transformation"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines constraint satisfaction with state transformation"
+  - id: "R2"
+    action: "Constraints change as pieces transform"
+  - id: "R3"
+    action: "Transformations must satisfy evolving constraints"
+
+win:
+  condition: "Complete transformation chain satisfying all constraints"
+
+minimal_scenarios: 21-25

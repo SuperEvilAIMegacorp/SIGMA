@@ -1,0 +1,71 @@
+game_id: "portal_021"
+name: "Portal"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "7x7"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+    - name: "portal"
+      colors: ["red", "blue", "neutral"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell or portal cell"
+      action: "place marker"
+
+  portal_creation:
+    - id: "R_PORTAL_1"
+      condition: "2 friendly markers orthogonally adjacent"
+      action: "empty cell between them becomes your portal"
+
+  portal_teleport:
+    - id: "R_TELE_1"
+      condition: "marker placed on your portal"
+      action: "marker can teleport to any other portal you control"
+      effect: "instant movement"
+
+  portal_blocking:
+    - id: "R_BLOCK_1"
+      condition: "enemy places on your portal"
+      action: "portal destroyed, becomes neutral cell"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "teleport places marker adjacent to 3+ enemies"
+      action: "teleporting marker captured on arrival"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "control 5+ portals"
+
+description: |
+  Portal creates teleportation points. Two adjacent friendlies create a portal between them.
+  Place on your portal to teleport to any other portal you control. Enemies can destroy
+  portals by placing on them. Teleporting into 3+ enemies = capture. Control 5 portals to
+  win. Portal network creates strategic mobility and territorial control.
+
+interactions:
+  - rules: ["R_PORTAL_1", "R_TELE_1"]
+    type: "enabling"
+  - rules: ["R_TELE_1", "R_CAPTURE_1"]
+    type: "risk_reward"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 17-21

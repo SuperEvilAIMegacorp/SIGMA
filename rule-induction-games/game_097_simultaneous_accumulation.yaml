@@ -1,0 +1,16 @@
+game_id: "simultaneous_accumulation_097"
+name: "Simultaneous Accumulation"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines simultaneous actions with set collection"
+  - id: "R2"
+    action: "Both players bid on sets simultaneously"
+  - id: "R3"
+    action: "Sets accumulate bonuses over time"
+
+win:
+  condition: "Accumulate 3 complete sets"
+
+minimal_scenarios: 16-20

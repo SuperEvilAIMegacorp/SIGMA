@@ -1,0 +1,68 @@
+game_id: "mirror_011"
+name: "Mirror"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "7x7"
+    topology: "orthogonal"
+    symmetry_axis: "vertical_center"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker"
+      effect: "mirror copy appears on opposite side of axis"
+
+  mirror_rule:
+    - id: "R_MIRROR_1"
+      condition: "placement on left side of axis"
+      action: "identical marker appears on mirrored right position"
+
+    - id: "R_MIRROR_2"
+      condition: "mirror position occupied"
+      action: "placement blocked"
+
+  asymmetry_penalty:
+    - id: "R_ASYM_1"
+      condition: "board becomes asymmetric (marker removed)"
+      action: "mirror marker also removed"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "4 markers form symmetric square"
+      action: "capture all enemy markers inside square"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has < 4 markers"
+
+description: |
+  Mirror enforces board symmetry across a vertical axis. Placements automatically create
+  mirrored copies. Cannot place if mirror position is occupied. Captures occur when 4
+  markers form a symmetric square pattern, capturing all enemies inside. Symmetry creates
+  strategic constraints and opportunities.
+
+interactions:
+  - rules: ["R_PLACE_1", "R_MIRROR_1"]
+    type: "automatic"
+  - rules: ["R_MIRROR_2", "R_PLACE_1"]
+    type: "blocking"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 10-13

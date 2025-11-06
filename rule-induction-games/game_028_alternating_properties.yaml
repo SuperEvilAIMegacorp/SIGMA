@@ -1,0 +1,77 @@
+game_id: "alternating_properties_028"
+name: "Alternating Properties"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+    cells:
+      - name: "terrain"
+        type: "enum"
+        values: ["A", "B"]
+        pattern: "checkerboard"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker"
+
+  terrain_restriction:
+    - id: "R_TERRAIN_1"
+      condition: "marker on terrain A"
+      action: "can only move to adjacent terrain B cells"
+
+    - id: "R_TERRAIN_2"
+      condition: "marker on terrain B"
+      action: "can only move to adjacent terrain A cells"
+
+  movement:
+    - id: "R_MOVE_1"
+      condition: "your marker"
+      action: "move to orthogonally adjacent cell of opposite terrain"
+      effect: "must alternate terrains"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "move onto enemy marker"
+      action: "capture enemy"
+
+  placement_rule:
+    - id: "R_PLACE_RESTRICT_1"
+      condition: "first marker must be on terrain A, second on B, alternating"
+      action: "forced alternation in initial placement"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no markers"
+
+description: |
+  Alternating Properties uses checkerboard terrain (A/B pattern). Markers must alternate
+  terrains when moving (A→B→A→B). Initial placement also alternates. Movement captures
+  enemies. Creates movement constraints based on board position. Must plan paths considering
+  alternation requirement. Win by eliminating all enemy markers.
+
+interactions:
+  - rules: ["R_TERRAIN_1", "R_TERRAIN_2"]
+    type: "state_dependent_rule"
+  - rules: ["R_MOVE_1", "R_CAPTURE_1"]
+    type: "enabling"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 14-17

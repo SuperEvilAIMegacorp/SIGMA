@@ -1,0 +1,70 @@
+game_id: "chain_017"
+name: "Chain"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "chain_id"
+          type: "integer"
+          description: "Which connected group"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell adjacent to your existing marker"
+      action: "place marker, joins that chain"
+
+  chain_formation:
+    - id: "R_CHAIN_1"
+      condition: "friendly markers orthogonally connected"
+      action: "form chain with shared chain_id"
+
+  chain_strength:
+    - id: "R_STRENGTH_1"
+      condition: "chain size"
+      action: "chain_strength = number_of_markers_in_chain"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy chain surrounded by your chain"
+      action: "if your_chain_strength > enemy_chain_strength, capture enemy chain"
+
+    - id: "R_CAPTURE_2"
+      condition: "your chain encloses empty space"
+      action: "empty space becomes your territory (cannot be entered by enemy)"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent cannot place (no adjacent cells available)"
+
+description: |
+  Chain requires connected placement. Markers form chains (connected groups). Chains can
+  surround enemy chains; if surrounding chain is stronger (more markers), capture enclosed
+  chain. Chains enclosing empty space claim it as territory. Win by blocking enemy placement
+  (they need adjacent cells to your existing markers).
+
+interactions:
+  - rules: ["R_PLACE_1", "R_CHAIN_1"]
+    type: "automatic"
+  - rules: ["R_STRENGTH_1", "R_CAPTURE_1"]
+    type: "comparison"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 15-18

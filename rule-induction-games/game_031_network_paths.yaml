@@ -1,0 +1,60 @@
+game_id: "network_paths_031"
+name: "Network Paths"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 12
+    topology: "custom_defined"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty node OR adjacent to your existing marker"
+      action: "place marker on node"
+
+  path_formation:
+    - id: "R_PATH_1"
+      condition: "your markers form connected path of length 4+"
+      action: "path becomes locked (cannot be interrupted)"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "place marker that cuts enemy path"
+      action: "if enemy path < 4 nodes, all markers in path captured"
+
+  bridge_rule:
+    - id: "R_BRIDGE_1"
+      condition: "node connects 2+ separate components"
+      action: "node is bridge, has double importance"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "form path connecting opposite sides of graph"
+
+description: |
+  Network Paths uses a 12-node graph. Place markers on empty or adjacent nodes. Paths of 4+
+  connected markers lock. Cutting enemy paths < 4 captures them. Bridge nodes (connecting
+  components) count double. Win by forming path across graph. Strategic path-building while
+  disrupting opponents.
+
+interactions:
+  - rules: ["R_PATH_1", "R_CAPTURE_1"]
+    type: "threshold_protection"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 12-15

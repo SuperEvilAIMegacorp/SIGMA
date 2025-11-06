@@ -1,0 +1,73 @@
+game_id: "absorption_013"
+name: "Absorption"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "mass"
+          type: "integer"
+          range: "1-9"
+          description: "Number of markers absorbed"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker with mass = 1"
+
+  absorption:
+    - id: "R_ABSORB_1"
+      condition: "friendly marker adjacent to another friendly"
+      action: "can merge into single marker"
+      effect: "new_mass = sum of masses, placed on either original position"
+
+    - id: "R_ABSORB_2"
+      condition: "marker mass >= 5"
+      action: "can absorb adjacent enemy markers with mass < 3"
+
+  splitting:
+    - id: "R_SPLIT_1"
+      condition: "marker mass >= 4"
+      action: "can split into two markers"
+      effect: "divide mass (round down for one, round up for other)"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "marker mass >= enemy_mass * 2"
+      action: "can move onto enemy cell, absorbing enemy"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "control all mass (enemy total mass = 0)"
+
+description: |
+  Absorption allows markers to merge, increasing mass. Mass 5+ markers can absorb small
+  enemies (mass < 3). Large markers (mass 4+) can split. Captures occur when mass >= 2x
+  enemy mass. Managing mass distribution and when to merge/split is strategic. Win by
+  controlling all mass on board.
+
+interactions:
+  - rules: ["R_ABSORB_1", "R_SPLIT_1"]
+    type: "inverse"
+  - rules: ["R_ABSORB_2", "R_CAPTURE_1"]
+    type: "mass_dependent"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 14-17

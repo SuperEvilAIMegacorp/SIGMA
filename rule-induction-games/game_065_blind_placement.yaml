@@ -1,0 +1,16 @@
+game_id: "blind_placement_065"
+name: "Blind Placement"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Players simultaneously choose cell without seeing opponent choice"
+  - id: "R2"
+    action: "If same cell: neither places. If different: both place successfully"
+  - id: "R3"
+    action: "Capture by surrounding 4-way"
+
+win:
+  condition: "Control 13+ cells"
+
+minimal_scenarios: 9-12

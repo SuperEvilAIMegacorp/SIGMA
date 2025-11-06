@@ -1,0 +1,16 @@
+game_id: "sudoku_battle_082"
+name: "Sudoku Battle"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Place numbered markers following sudoku-like constraints"
+  - id: "R2"
+    action: "No repeats in rows, columns, or 3x3 regions"
+  - id: "R3"
+    action: "Violating constraints loses points"
+
+win:
+  condition: "Fill board with 30+ valid placements"
+
+minimal_scenarios: 16-20

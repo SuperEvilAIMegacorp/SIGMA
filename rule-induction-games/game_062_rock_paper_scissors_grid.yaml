@@ -1,0 +1,53 @@
+game_id: "rps_grid_062"
+name: "RPS Grid"
+category: "simultaneous_action"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "3x3"
+
+  pieces:
+    - name: "symbol"
+      types: ["rock", "paper", "scissors"]
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "simultaneous"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "both choose cell and symbol type secretly, reveal simultaneously"
+
+  resolution:
+    - id: "R_RESOLVE_1"
+      condition: "same cell chosen"
+      action: "RPS rules (rock beats scissors, scissors beats paper, paper beats rock)"
+
+    - id: "R_RESOLVE_2"
+      condition: "different cells"
+      action: "both place successfully"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "your symbol adjacent to losing enemy symbol"
+      action: "capture enemy"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "control 5+ cells"
+
+description: |
+  RPS Grid uses simultaneous placement with symbol types. If same cell chosen, RPS determines
+  winner. Adjacent symbols can capture based on RPS rules. Strategic symbol choice and
+  positioning. First to control 5 cells wins.
+
+induction_difficulty:
+  observable_patterns: "low"
+  hidden_constraints: "medium"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 8-11

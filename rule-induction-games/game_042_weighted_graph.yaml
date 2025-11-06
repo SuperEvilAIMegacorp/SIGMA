@@ -1,0 +1,62 @@
+game_id: "weighted_graph_042"
+name: "Weighted Graph"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 10
+    edges:
+      - name: "weight"
+        type: "integer"
+        range: "1-5"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty node"
+      action: "place marker"
+
+  node_value:
+    - id: "R_VALUE_1"
+      condition: "marker on node"
+      action: "node_value = sum of weights of incident edges"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "adjacent enemies, compare node_values"
+      action: "higher value captures lower"
+
+  bonus:
+    - id: "R_BONUS_1"
+      condition: "control node with value >= 15"
+      action: "all your nodes get +2 value"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "total controlled value >= 50"
+
+description: |
+  Weighted Graph has edge weights. Node value = sum of incident edge weights. Adjacent
+  comparison captures lower value. High-value nodes (15+) boost all your markers (+2). Win
+  by controlling total value 50+. Position on high-degree, high-weight nodes critical.
+
+interactions:
+  - rules: ["R_VALUE_1", "R_CAPTURE_1"]
+    type: "value_comparison"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "low"
+
+minimal_scenarios_to_infer: 13-16

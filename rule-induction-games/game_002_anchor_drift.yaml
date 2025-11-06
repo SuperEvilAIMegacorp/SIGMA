@@ -1,0 +1,215 @@
+game_id: "anchor_drift_002"
+name: "Anchor Drift"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+    coordinates: "A1-E5"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "anchored"
+          type: "boolean"
+          computed: true
+          description: "True if marker has 2+ friendly orthogonal neighbors"
+        - name: "drift_count"
+          type: "integer"
+          range: "0-4"
+          computed: true
+          description: "Number of empty orthogonal adjacent cells"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+    starting_player: "red"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      priority: 1
+      condition: "cell is empty"
+      action: "place marker on cell"
+      effect: "marker added, anchored status calculated for all markers"
+      exceptions: []
+
+  anchor_calculation:
+    - id: "R_ANCHOR_1"
+      priority: 1
+      condition: "marker has 2+ friendly markers orthogonally adjacent"
+      action: "set anchored = true"
+      effect: "marker becomes immobile"
+      exceptions: []
+
+  drift:
+    - id: "R_DRIFT_1"
+      priority: 1
+      condition: "marker is NOT anchored AND has empty orthogonal neighbors"
+      action: "marker must drift away from nearest enemy marker"
+      effect: "marker moves 1 space orthogonally away"
+      exceptions: ["board edge blocks drift", "occupied cell blocks drift"]
+
+    - id: "R_DRIFT_2"
+      priority: 2
+      condition: "multiple enemy markers equidistant"
+      action: "active player chooses drift direction"
+      effect: "marker drifts in chosen direction"
+      exceptions: []
+
+  capture:
+    - id: "R_CAPTURE_1"
+      priority: 1
+      condition: "enemy marker drifts onto cell orthogonally adjacent to 3+ friendly markers"
+      action: "capture drifted enemy marker"
+      effect: "remove enemy marker"
+      exceptions: []
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no markers on board"
+      priority: 1
+
+    - id: "WIN_2"
+      condition: "opponent has only anchored markers and cannot place"
+      priority: 2
+
+interactions:
+  - rules: ["R_PLACE_1", "R_ANCHOR_1"]
+    type: "enabling"
+    description: "Placement triggers anchor recalculation"
+
+  - rules: ["R_ANCHOR_1", "R_DRIFT_1"]
+    type: "blocking"
+    description: "Anchored markers cannot drift"
+
+  - rules: ["R_DRIFT_1", "R_CAPTURE_1"]
+    type: "enabling"
+    description: "Drift movement can trigger captures"
+
+  - rules: ["R_PLACE_1", "R_DRIFT_1"]
+    type: "cascading"
+    description: "Placement can push enemy markers away, which may trigger more drifts"
+
+description: |
+  Anchor Drift is a 2-player abstract strategy game on a 5x5 grid. Players alternate
+  placing markers on empty cells. After each placement, all non-anchored enemy markers
+  automatically "drift" away from the nearest enemy marker by one space.
+
+  A marker becomes "anchored" when it has 2 or more friendly markers orthogonally
+  adjacent (sharing an edge). Anchored markers cannot drift.
+
+  If an enemy marker drifts into a position where it's orthogonally adjacent to 3
+  or more friendly markers, it's captured and removed. Victory comes from capturing
+  all enemy markers or trapping them so they cannot place new markers.
+
+rule_explanations:
+  - rule_id: "R_PLACE_1"
+    natural_language: "Place one marker on any empty cell on your turn."
+    examples:
+      - scenario: "Empty cell at C3"
+        legal: true
+        reason: "Any empty cell is valid for placement"
+
+  - rule_id: "R_ANCHOR_1"
+    natural_language: "A marker is anchored if it has 2 or more friendly markers orthogonally adjacent (sharing edges, not corners)."
+    examples:
+      - scenario: "Red at C3 with red at B3 and C2"
+        anchored: true
+        reason: "Two friendly orthogonal neighbors"
+      - scenario: "Red at C3 with red at B2 and D4"
+        anchored: false
+        reason: "Diagonal neighbors don't count"
+
+  - rule_id: "R_DRIFT_1"
+    natural_language: "After placement, non-anchored enemy markers drift away from the nearest enemy marker. Drift moves one space orthogonally."
+    examples:
+      - scenario: "Red places at D3, blue at D5 (not anchored)"
+        drift: "Blue drifts from D5 to D6 (if exists) or E5"
+        reason: "D5 drifts away from nearest red at D3"
+      - scenario: "Red places at D3, blue at C3 (anchored with 2 neighbors)"
+        drift: "No drift"
+        reason: "Anchored markers don't drift"
+
+  - rule_id: "R_CAPTURE_1"
+    natural_language: "If drift causes an enemy marker to be adjacent to 3+ friendly markers, capture it."
+    examples:
+      - scenario: "Blue drifts to C3, red markers at B3, C2, C4, D3"
+        captured: true
+        reason: "Blue at C3 adjacent to 4 red markers"
+
+edge_cases:
+  - scenario: "Drift at board edge"
+    question: "What if drift would push marker off board?"
+    answer: "Marker stays in place - cannot drift off board"
+    involved_rules: ["R_DRIFT_1"]
+
+  - scenario: "Drift into occupied cell"
+    question: "What if drift direction is occupied?"
+    answer: "Marker stays in place - cannot drift into occupied cell"
+    involved_rules: ["R_DRIFT_1"]
+
+  - scenario: "Chain drift"
+    question: "If blue drifts, can that trigger red to drift?"
+    answer: "No. Drift only happens immediately after placement, not from other drifts"
+    involved_rules: ["R_DRIFT_1"]
+
+  - scenario: "Equidistant enemies"
+    question: "What if multiple enemies are equidistant?"
+    answer: "Active player (who just placed) chooses the drift direction"
+    involved_rules: ["R_DRIFT_2"]
+
+example_states:
+  - state_id: "initial"
+    description: "Empty board"
+    board: |
+      5 [ ][ ][ ][ ][ ]
+      4 [ ][ ][ ][ ][ ]
+      3 [ ][ ][ ][ ][ ]
+      2 [ ][ ][ ][ ][ ]
+      1 [ ][ ][ ][ ][ ]
+         A  B  C  D  E
+
+  - state_id: "anchored_vs_floating"
+    description: "Red anchored cluster, blue floating markers"
+    board: |
+      5 [ ][B][ ][B][ ]
+      4 [ ][ ][ ][ ][ ]
+      3 [R][R][R][ ][ ]
+      2 [ ][R][ ][ ][ ]
+      1 [ ][ ][ ][ ][ ]
+         A  B  C  D  E
+    notes: |
+      R@A3 anchored (neighbors: B3, A2)
+      R@B3 anchored (neighbors: A3, C3, B2)
+      R@C3 anchored (neighbors: B3)
+      R@B2 anchored (neighbors: B3)
+      B@B5 not anchored (no blue neighbors)
+      B@D5 not anchored (no blue neighbors)
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "high"
+
+challenge_notes: |
+  - Anchor calculation (2+ neighbors) is specific threshold
+  - Drift direction based on "nearest enemy" requires distance calculation
+  - Anchored status blocks drift - negative constraint
+  - Capture threshold (3+ neighbors) different from anchor threshold (2+)
+  - Edge/occupied blocking is implicit
+  - Chain drift doesn't happen - negative rule
+
+minimal_scenarios_to_infer: 12-15
+
+key_insights_needed:
+  - "Anchor requires exactly 2+ orthogonal neighbors"
+  - "Only non-anchored markers drift"
+  - "Drift happens after enemy placement, not friendly"
+  - "Drift direction is away from nearest enemy"
+  - "Capture requires 3+ neighbors (not 2 like anchor)"
+  - "Drift doesn't chain"

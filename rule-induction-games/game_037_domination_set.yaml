@@ -1,0 +1,62 @@
+game_id: "domination_set_037"
+name: "Domination Set"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 15
+
+  pieces:
+    - name: "dominator"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty node"
+      action: "place dominator"
+
+  domination:
+    - id: "R_DOM_1"
+      condition: "dominator on node N"
+      action: "dominates N and all adjacent nodes"
+
+  control:
+    - id: "R_CONTROL_1"
+      condition: "node dominated by only one color"
+      action: "that color controls node"
+
+    - id: "R_CONTROL_2"
+      condition: "node dominated by both colors"
+      action: "contested, no control"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy dominator's neighbors all controlled by you"
+      action: "enemy dominator captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "control 10+ nodes"
+
+description: |
+  Domination Set has dominators control node + neighbors. Nodes dominated by single color
+  are controlled. Both colors = contested. Capture enemies whose neighbors you all control.
+  Win by controlling 10+ nodes. Efficient placement maximizes domination reach.
+
+interactions:
+  - rules: ["R_DOM_1", "R_CONTROL_1"]
+    type: "area_effect"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 14-17

@@ -1,0 +1,16 @@
+game_id: "treasure_hoard_074"
+name: "Treasure Hoard"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Collect treasure tokens of varying values (1-10)"
+  - id: "R2"
+    action: "Sets of same value multiply (3x5=15, 4x5=40, 5x5=125)"
+  - id: "R3"
+    action: "Mixed collections score sum only"
+
+win:
+  condition: "Hoard value 200+"
+
+minimal_scenarios: 13-16

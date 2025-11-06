@@ -1,0 +1,62 @@
+game_id: "blocking_pattern_026"
+name: "Blocking Pattern"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell AND does not form forbidden pattern"
+      action: "place marker"
+
+  forbidden_patterns:
+    - id: "R_FORBID_1"
+      condition: "placement creates 2x2 square of same color"
+      action: "placement blocked"
+
+    - id: "R_FORBID_2"
+      condition: "placement creates plus-sign pattern (+) of same color"
+      action: "placement blocked"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy forms forbidden pattern"
+      action: "all markers in forbidden pattern captured"
+      effect: "illegal pattern severely punished"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent cannot make legal placement"
+
+description: |
+  Blocking Pattern forbids specific formations. Cannot create 2x2 squares or plus-signs of
+  your own color. If opponent accidentally creates forbidden pattern, capture all markers
+  in that pattern. Must carefully plan to avoid patterns while trying to force opponent
+  into them. Win by blocking all legal opponent moves.
+
+interactions:
+  - rules: ["R_PLACE_1", "R_FORBID_1", "R_FORBID_2"]
+    type: "constraint_checking"
+  - rules: ["R_FORBID_1", "R_CAPTURE_1"]
+    type: "punishment"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 16-20

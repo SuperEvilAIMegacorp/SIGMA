@@ -1,0 +1,65 @@
+game_id: "mutation_050"
+name: "Mutation"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "organism"
+      colors: ["red", "blue"]
+      traits: ["speed", "strength", "defense", "reproduction"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place organism with 1 random trait"
+
+  mutation:
+    - id: "R_MUTATE_1"
+      condition: "organism survives 3 turns"
+      action: "gains second trait"
+
+    - id: "R_MUTATE_2"
+      condition: "organism survives 6 turns"
+      action: "gains third trait"
+
+  trait_effects:
+    - id: "R_SPEED_1"
+      condition: "has speed"
+      action: "moves 2 spaces per turn"
+
+    - id: "R_STRENGTH_1"
+      condition: "has strength"
+      action: "captures adjacent enemies"
+
+    - id: "R_DEFENSE_1"
+      condition: "has defense"
+      action: "immune to strength capture"
+
+    - id: "R_REPRO_1"
+      condition: "has reproduction"
+      action: "can spawn adjacent copy (once per game per organism)"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "have organism with all 4 traits"
+
+description: |
+  Mutation accumulates traits over time. Organisms start with 1 trait, gain more after 3 and
+  6 turns. Traits stack for powerful combinations (speed+strength = mobile attacker, defense+
+  reproduction = resilient spreader). Win by creating super-organism with all 4 traits.
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 14-17

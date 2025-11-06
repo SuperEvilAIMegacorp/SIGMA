@@ -1,0 +1,16 @@
+game_id: "gravity_portal_095"
+name: "Gravity Portal"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines gravity mechanics with portal networks"
+  - id: "R2"
+    action: "Portals redirect falling pieces"
+  - id: "R3"
+    action: "Gravity can create portal connections"
+
+win:
+  condition: "Create gravity-portal loop scoring 50+ points"
+
+minimal_scenarios: 18-22

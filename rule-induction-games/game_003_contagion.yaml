@@ -1,0 +1,86 @@
+game_id: "contagion_003"
+name: "Contagion"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal_and_diagonal"
+
+  pieces:
+    - name: "cell"
+      colors: ["red", "blue", "neutral"]
+      properties:
+        - name: "infection_level"
+          type: "integer"
+          range: "0-8"
+          description: "Number of same-color neighbors"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+    starting_player: "red"
+
+rules:
+  infection:
+    - id: "R_INFECT_1"
+      condition: "neutral cell has 2+ adjacent cells of same color"
+      action: "convert neutral cell to that color"
+      effect: "cell changes ownership"
+
+    - id: "R_INFECT_2"
+      condition: "enemy cell has 3+ adjacent cells of opposite color"
+      action: "convert enemy cell to opposite color"
+      effect: "cell flips ownership"
+
+  placement:
+    - id: "R_PLACE_1"
+      condition: "cell is neutral AND player has placed < 3 initial markers"
+      action: "claim neutral cell"
+      effect: "cell becomes player color"
+
+  spread:
+    - id: "R_SPREAD_1"
+      priority: 1
+      condition: "after any cell changes color"
+      action: "check all neutral cells for infection"
+      effect: "may trigger chain reaction"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "player controls 15+ cells"
+
+interactions:
+  - rules: ["R_INFECT_1", "R_SPREAD_1"]
+    type: "cascading"
+    description: "Infection can trigger more infections"
+
+  - rules: ["R_INFECT_1", "R_INFECT_2"]
+    type: "precedence"
+    description: "Neutral infection happens before enemy conversion"
+
+description: |
+  Contagion is played on a 5x5 grid where all cells start neutral. Players take turns
+  claiming neutral cells (max 3 each in opening). After opening, cells spread through
+  infection rules: neutral cells convert if adjacent to 2+ of same color, enemy cells
+  flip if adjacent to 3+ opponents. Chains can cascade. First to 15 cells wins.
+
+edge_cases:
+  - scenario: "Simultaneous qualification"
+    question: "If a neutral cell has 2 red and 2 blue neighbors?"
+    answer: "Active player's color takes precedence"
+    involved_rules: ["R_INFECT_1"]
+
+  - scenario: "Chain reaction limits"
+    question: "Do infections cascade infinitely?"
+    answer: "Yes, until no more cells qualify for infection"
+    involved_rules: ["R_SPREAD_1"]
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "medium"
+  rule_interdependence: "high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 10-12

@@ -1,0 +1,72 @@
+game_id: "rotation_014"
+name: "Rotation"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "orientation"
+          type: "enum"
+          values: ["north", "east", "south", "west"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker facing chosen direction"
+
+  influence:
+    - id: "R_INFLUENCE_1"
+      condition: "marker facing direction D"
+      action: "controls cells in direction D up to 3 spaces"
+      effect: "creates influence ray"
+
+  blocking:
+    - id: "R_BLOCK_1"
+      condition: "enemy marker in influence ray"
+      action: "influence blocked at that marker"
+
+  rotation:
+    - id: "R_ROTATE_1"
+      condition: "your marker"
+      action: "can rotate 90 degrees as action (instead of placing)"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy marker in 2+ influence rays"
+      action: "enemy captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has < 3 markers"
+
+description: |
+  Rotation gives markers directional influence. Each marker projects influence up to 3
+  cells in its facing direction, blocked by enemies. Can rotate markers 90° instead of
+  placing. Enemies caught in 2+ influence rays are captured. Must coordinate marker
+  orientations to create crossing rays while protecting your own pieces.
+
+interactions:
+  - rules: ["R_INFLUENCE_1", "R_BLOCK_1"]
+    type: "limiting"
+  - rules: ["R_INFLUENCE_1", "R_CAPTURE_1"]
+    type: "accumulating"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 13-16

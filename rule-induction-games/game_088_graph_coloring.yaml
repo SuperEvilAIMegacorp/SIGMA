@@ -1,0 +1,18 @@
+game_id: "graph_coloring_088"
+name: "Graph Coloring"
+category: "constraint_satisfaction"
+
+rules:
+  - id: "R1"
+    action: "Assign colors to graph nodes"
+  - id: "R2"
+    action: "Adjacent nodes must have different colors"
+  - id: "R3"
+    action: "Use minimum number of colors possible"
+  - id: "R4"
+    action: "Bonus points for using fewer colors"
+
+win:
+  condition: "Valid coloring with ≤4 colors"
+
+minimal_scenarios: 16-19

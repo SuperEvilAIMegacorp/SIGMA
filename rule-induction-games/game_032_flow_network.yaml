@@ -1,0 +1,62 @@
+game_id: "flow_network_032"
+name: "Flow Network"
+category: "graph_game"
+
+state:
+  graph:
+    type: "directed"
+    nodes: 10
+    edges:
+      - name: "capacity"
+        type: "integer"
+        range: "1-3"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty node"
+      action: "place marker"
+
+  flow_calculation:
+    - id: "R_FLOW_1"
+      condition: "markers placed"
+      action: "flow = sum of edge capacities along directed paths from source to sink"
+
+  blocking:
+    - id: "R_BLOCK_1"
+      condition: "enemy marker on node"
+      action: "flow through that node reduced by 1"
+
+  control:
+    - id: "R_CONTROL_1"
+      condition: "your marker controls node"
+      action: "can redirect one outgoing edge"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "your flow > 10"
+
+description: |
+  Flow Network uses directed graph with edge capacities. Markers control nodes and affect
+  flow from source to sink. Enemy markers reduce flow through nodes. Controlling nodes allows
+  edge redirection. Calculate maximum flow paths. First to flow > 10 wins.
+
+interactions:
+  - rules: ["R_FLOW_1", "R_BLOCK_1"]
+    type: "calculation_modification"
+
+induction_difficulty:
+  observable_patterns: "very_high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 20-25

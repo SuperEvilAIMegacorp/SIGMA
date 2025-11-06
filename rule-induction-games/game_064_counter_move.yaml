@@ -1,0 +1,52 @@
+game_id: "counter_move_064"
+name: "Counter Move"
+category: "simultaneous_action"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "piece"
+      colors: ["red", "blue"]
+      actions: ["attack", "defend", "move"]
+
+  players:
+    count: 2
+    turn_order: "simultaneous"
+
+rules:
+  action_selection:
+    - id: "R_ACTION_1"
+      action: "choose action for each piece secretly"
+
+  resolution:
+    - id: "R_COUNTER_1"
+      condition: "attack vs defend on same piece"
+      action: "defend wins, attack fails"
+
+    - id: "R_COUNTER_2"
+      condition: "attack vs attack"
+      action: "both pieces removed"
+
+    - id: "R_COUNTER_3"
+      condition: "attack vs move"
+      action: "attack succeeds, target captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no pieces"
+
+description: |
+  Counter Move has piece actions with counter relationships. Attack beats move, defend beats
+  attack, move escapes. Simultaneous choices create strategy. Predicting opponent actions
+  critical. Win by eliminating opponent.
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 13-16

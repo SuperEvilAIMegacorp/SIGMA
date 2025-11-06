@@ -1,0 +1,68 @@
+game_id: "shadow_016"
+name: "Shadow"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "6x6"
+    topology: "orthogonal"
+    light_source: "north"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "shadow_length"
+          type: "integer"
+          computed: true
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell not in shadow"
+      action: "place marker"
+
+  shadow_cast:
+    - id: "R_SHADOW_1"
+      condition: "marker exists"
+      action: "casts shadow southward, length = row_number"
+      effect: "cells south of marker in shadow"
+
+  shadow_blocking:
+    - id: "R_BLOCK_1"
+      condition: "cell in shadow"
+      action: "cannot place markers in shadowed cells"
+
+  shadow_capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy marker's entire shadow contains only your markers"
+      action: "enemy marker captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no legal placement cells"
+
+description: |
+  Shadow has a north light source. Markers cast shadows southward, length equals row number
+  (row 1 = 1 cell shadow, row 6 = 6 cell shadow). Cannot place in shadowed cells. Capture
+  enemies whose shadows contain only your pieces. Positioning creates shrinking placement
+  options. Win by blocking all enemy placements.
+
+interactions:
+  - rules: ["R_SHADOW_1", "R_BLOCK_1"]
+    type: "constraint_creation"
+  - rules: ["R_SHADOW_1", "R_CAPTURE_1"]
+    type: "enabling"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 14-17

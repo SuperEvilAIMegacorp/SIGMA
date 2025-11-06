@@ -1,0 +1,14 @@
+game_id: "tug_of_war_069"
+name: "Tug of War"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Commit strength to contested zones simultaneously"
+  - id: "R2"
+    action: "Higher strength wins zone"
+
+win:
+  condition: "Win 5 of 7 zones"
+
+minimal_scenarios: 8-11

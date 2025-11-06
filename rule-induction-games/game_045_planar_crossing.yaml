@@ -1,0 +1,59 @@
+game_id: "planar_crossing_045"
+name: "Planar Crossing"
+category: "graph_game"
+
+state:
+  graph:
+    type: "undirected"
+    nodes: 8
+    planar_embedding: true
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty node"
+      action: "place marker"
+
+  edge_creation:
+    - id: "R_EDGE_1"
+      condition: "your two markers"
+      action: "can create edge between them if no crossing with existing edges"
+
+  face_control:
+    - id: "R_FACE_1"
+      condition: "face (region) bounded by your edges"
+      action: "you control that face"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy marker inside face you control"
+      action: "enemy captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "control 3+ faces"
+
+description: |
+  Planar Crossing uses planar graph (no edge crossings). Create edges between your markers
+  if no crossing. Faces bounded by your edges are controlled. Enemies inside controlled faces
+  are captured. Win by controlling 3 faces. Topology and planarity constraints critical.
+
+interactions:
+  - rules: ["R_EDGE_1", "R_FACE_1"]
+    type: "geometric_constraint"
+
+induction_difficulty:
+  observable_patterns: "very_high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 19-24

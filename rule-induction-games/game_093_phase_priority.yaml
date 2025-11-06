@@ -1,0 +1,16 @@
+game_id: "phase_priority_093"
+name: "Phase Priority"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines phase shifting with priority stacking"
+  - id: "R2"
+    action: "Phase determines action priority"
+  - id: "R3"
+    action: "Priority affects phase transition speed"
+
+win:
+  condition: "Control all phases simultaneously"
+
+minimal_scenarios: 20-24

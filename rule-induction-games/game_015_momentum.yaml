@@ -1,0 +1,76 @@
+game_id: "momentum_015"
+name: "Momentum"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "7x7"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "velocity"
+          type: "vector"
+          description: "Direction and speed"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker with velocity = (0,0)"
+
+  movement:
+    - id: "R_MOVE_1"
+      condition: "your marker with velocity = 0"
+      action: "can push marker in cardinal direction"
+      effect: "marker gains velocity = 1 in that direction"
+
+    - id: "R_MOVE_2"
+      condition: "marker with velocity > 0"
+      action: "marker automatically moves in velocity direction each turn"
+      effect: "continues moving until stopped"
+
+  collision:
+    - id: "R_COLLIDE_1"
+      condition: "marker hits occupied cell"
+      action: "if enemy: both captured; if friendly: both stop (velocity = 0)"
+
+    - id: "R_COLLIDE_2"
+      condition: "marker hits board edge"
+      action: "marker stops (velocity = 0)"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "moving marker passes through cell adjacent to 2+ stationary enemies"
+      action: "marker is deflected and captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no stationary markers (all captured or moving)"
+
+description: |
+  Momentum introduces physics. Push markers to give them velocity. Moving markers continue
+  moving each turn until collision. Hitting enemies = mutual capture. Hitting friends = both
+  stop. Moving past 2+ stationary enemies = deflected and captured. Must time pushes and
+  create strategic collisions. Win by eliminating all enemy stationary markers.
+
+interactions:
+  - rules: ["R_MOVE_1", "R_MOVE_2"]
+    type: "state_change"
+  - rules: ["R_MOVE_2", "R_COLLIDE_1"]
+    type: "automatic_check"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 16-20

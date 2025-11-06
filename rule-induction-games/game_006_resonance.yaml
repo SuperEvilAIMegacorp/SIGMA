@@ -1,0 +1,68 @@
+game_id: "resonance_006"
+name: "Resonance"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "7x7"
+    topology: "orthogonal_and_diagonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "resonance_value"
+          type: "integer"
+          computed: true
+          description: "Sum of (1/distance) to all friendly markers"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker"
+
+  resonance:
+    - id: "R_RESON_1"
+      condition: "always"
+      action: "calculate resonance = sum of 1/manhattan_distance to each friendly"
+      effect: "each marker has resonance value"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "enemy marker has resonance < 1.0"
+      action: "marker is unstable, removed"
+      effect: "weak resonance causes elimination"
+
+    - id: "R_CAPTURE_2"
+      condition: "friendly marker placed within distance 2 of enemy with resonance < 1.5"
+      action: "enemy destabilizes and is captured"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no markers"
+
+description: |
+  Resonance uses distance-based scoring. Each marker has a resonance value equal to the
+  sum of 1/distance to all friendly markers. Markers with resonance < 1.0 are eliminated.
+  Placing near weak enemies (resonance < 1.5 within distance 2) captures them. Must
+  maintain connected clusters for stability.
+
+interactions:
+  - rules: ["R_RESON_1", "R_CAPTURE_1"]
+    type: "enabling"
+  - rules: ["R_PLACE_1", "R_CAPTURE_2"]
+    type: "triggering"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 20-25

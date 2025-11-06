@@ -1,0 +1,16 @@
+game_id: "resonance_decay_094"
+name: "Resonance Decay"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines resonance scoring with decay mechanics"
+  - id: "R2"
+    action: "Resonance slows decay, decay reduces resonance"
+  - id: "R3"
+    action: "Balance maintenance of both systems"
+
+win:
+  condition: "Maintain resonance >5 and vitality >3 for 5 turns"
+
+minimal_scenarios: 19-23

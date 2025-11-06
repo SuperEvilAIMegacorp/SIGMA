@@ -1,0 +1,67 @@
+game_id: "priority_stack_029"
+name: "Priority Stack"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "priority"
+          type: "integer"
+          description: "Order in which placed (1 = first)"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker with priority = total_markers_placed + 1"
+
+  priority_capture:
+    - id: "R_CAPTURE_1"
+      condition: "your marker adjacent to enemy with lower priority"
+      action: "can capture lower-priority enemy (optional)"
+
+  stack_rule:
+    - id: "R_STACK_1"
+      condition: "capture enemy marker"
+      action: "captured marker goes under your capturing marker (stack)"
+      effect: "stack priority = sum of all priorities in stack"
+
+  super_capture:
+    - id: "R_SUPER_1"
+      condition: "your stack priority > enemy stack priority + 5"
+      action: "can capture enemy stack from distance 2"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "control total priority > 60"
+
+description: |
+  Priority Stack assigns priority numbers by placement order. Can capture lower-priority
+  enemies. Captured markers stack under captor, priorities sum. High-priority stacks can
+  capture from distance. Creates temporal strategy - older pieces vulnerable but captures
+  build strength. Win by controlling priority total > 60.
+
+interactions:
+  - rules: ["R_CAPTURE_1", "R_STACK_1"]
+    type: "consequence"
+  - rules: ["R_STACK_1", "R_SUPER_1"]
+    type: "threshold_enabling"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 15-18

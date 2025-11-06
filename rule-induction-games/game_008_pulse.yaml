@@ -1,0 +1,72 @@
+game_id: "pulse_008"
+name: "Pulse"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "7x7"
+    topology: "orthogonal_and_diagonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "pulse_age"
+          type: "integer"
+          description: "Turns since placement"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker with pulse_age = 0"
+
+  pulse_propagation:
+    - id: "R_PULSE_1"
+      condition: "marker with pulse_age = N"
+      action: "affects all cells at manhattan distance N"
+      effect: "pulse wave expands"
+
+  pulse_effect:
+    - id: "R_EFFECT_1"
+      condition: "enemy marker in pulse range"
+      action: "enemy weakened"
+
+    - id: "R_EFFECT_2"
+      condition: "enemy marker hit by 2+ pulses"
+      action: "enemy captured"
+
+  aging:
+    - id: "R_AGE_1"
+      condition: "end of turn"
+      action: "increment pulse_age for all markers"
+      effect: "pulses expand over time"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has < 2 markers"
+
+description: |
+  Pulse features expanding wave mechanics. Each marker has a pulse age that increases each
+  turn. On turn N after placement, the marker affects all cells at Manhattan distance N.
+  Enemies in pulse range are weakened; if hit by 2+ pulses simultaneously, they're captured.
+  Creates expanding rings of influence that must be coordinated for captures.
+
+interactions:
+  - rules: ["R_AGE_1", "R_PULSE_1"]
+    type: "enabling"
+  - rules: ["R_PULSE_1", "R_EFFECT_2"]
+    type: "accumulation"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 16-20

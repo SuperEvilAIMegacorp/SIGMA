@@ -1,0 +1,16 @@
+game_id: "territory_infection_096"
+name: "Territory Infection"
+category: "hybrid"
+
+rules:
+  - id: "R1"
+    action: "Combines territory painting with infection spread"
+  - id: "R2"
+    action: "Territories infect adjacent territories"
+  - id: "R3"
+    action: "Infection strength based on territory size"
+
+win:
+  condition: "Infect all opponent territories"
+
+minimal_scenarios: 17-21

@@ -1,0 +1,70 @@
+game_id: "erosion_057"
+name: "Erosion"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    cells:
+      - name: "terrain"
+        type: "enum"
+        values: ["mountain", "hill", "plain", "valley"]
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place marker, cells start as mountains"
+
+  erosion_rule:
+    - id: "R_ERODE_1"
+      condition: "cell with 2+ adjacent pieces (any color)"
+      action: "terrain erodes: mountain→hill→plain→valley"
+
+  terrain_effects:
+    - id: "R_MOUNT_1"
+      condition: "mountain"
+      action: "marker has power 3"
+
+    - id: "R_HILL_1"
+      condition: "hill"
+      action: "marker has power 2"
+
+    - id: "R_PLAIN_1"
+      condition: "plain"
+      action: "marker has power 1"
+
+    - id: "R_VALLEY_1"
+      condition: "valley"
+      action: "marker power 0, removed"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "adjacent comparison"
+      action: "higher power captures lower"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no markers"
+
+description: |
+  Erosion degrades terrain over time. Cells erode with activity: mountain→hill→plain→valley.
+  Terrain determines marker power (mountain=3, hill=2, plain=1, valley=removed). Adjacent
+  power comparison captures. Balance placement to erode enemy terrain while protecting yours.
+  Win by eliminating opponent.
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 16-19

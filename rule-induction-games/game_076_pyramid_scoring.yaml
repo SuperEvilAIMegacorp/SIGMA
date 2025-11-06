@@ -1,0 +1,16 @@
+game_id: "pyramid_scoring_076"
+name: "Pyramid Scoring"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Build pyramid structure (base required to build higher)"
+  - id: "R2"
+    action: "Each level scores: level² × pieces (level 3 with 4 pieces = 9×4=36)"
+  - id: "R3"
+    action: "Complete pyramid scores bonus equal to height³"
+
+win:
+  condition: "Score 150+ points"
+
+minimal_scenarios: 15-18

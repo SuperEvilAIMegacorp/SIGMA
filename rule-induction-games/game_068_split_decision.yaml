@@ -1,0 +1,14 @@
+game_id: "split_decision_068"
+name: "Split Decision"
+category: "simultaneous_action"
+
+rules:
+  - id: "R1"
+    action: "Allocate actions to pieces simultaneously"
+  - id: "R2"
+    action: "Conflicts resolved by action priority"
+
+win:
+  condition: "Control 3 key positions"
+
+minimal_scenarios: 12-15

@@ -1,0 +1,80 @@
+game_id: "territory_009"
+name: "Territory"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+    cells:
+      - name: "ownership"
+        type: "enum"
+        values: ["neutral", "red", "blue"]
+      - name: "strength"
+        type: "integer"
+        range: "0-4"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "cell is neutral or owned by player"
+      action: "place marker, cell ownership = player color, strength = 1"
+
+  territory_spread:
+    - id: "R_SPREAD_1"
+      condition: "cell owned by player, no marker, adjacent to friendly marker"
+      action: "strengthen cell (+1 strength, max 4)"
+
+    - id: "R_SPREAD_2"
+      condition: "neutral cell adjacent to 2+ cells of same ownership"
+      action: "cell converts to that ownership, strength = 1"
+
+  conquest:
+    - id: "R_CONQUER_1"
+      condition: "place marker on enemy cell"
+      action: "if marker_strength > cell_strength, convert cell"
+      effect: "territory contested and won"
+
+    - id: "R_CONQUER_2"
+      condition: "marker_strength <= cell_strength"
+      action: "placement blocked, cell too strong"
+
+  marker_strength:
+    - id: "R_STRENGTH_1"
+      condition: "placing marker"
+      action: "marker_strength = number of adjacent friendly territories"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "control 20+ cells"
+
+description: |
+  Territory is about painting the board. Cells have ownership and strength. Place markers
+  to claim or contest territory. Marker strength equals adjacent friendly territories.
+  Can conquer enemy cells if marker stronger than cell. Territories spread and strengthen
+  over time. First to 20 cells wins.
+
+interactions:
+  - rules: ["R_PLACE_1", "R_STRENGTH_1"]
+    type: "enabling"
+  - rules: ["R_STRENGTH_1", "R_CONQUER_1"]
+    type: "conditional"
+  - rules: ["R_SPREAD_1", "R_SPREAD_2"]
+    type: "cascading"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 15-18

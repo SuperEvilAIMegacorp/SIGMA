@@ -1,0 +1,61 @@
+game_id: "element_cycle_048"
+name: "Element Cycle"
+category: "state_transformation"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+
+  pieces:
+    - name: "elemental"
+      colors: ["red", "blue"]
+      elements: ["fire", "water", "earth", "air"]
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      action: "place elemental, choose element"
+
+  cycling:
+    - id: "R_CYCLE_1"
+      condition: "adjacent to 2+ same element"
+      action: "transforms to next in cycle (fire→water→earth→air→fire)"
+
+  interactions:
+    - id: "R_INTERACT_1"
+      condition: "fire adjacent to earth"
+      action: "fire captures earth"
+
+    - id: "R_INTERACT_2"
+      condition: "water adjacent to fire"
+      action: "water captures fire"
+
+    - id: "R_INTERACT_3"
+      condition: "earth adjacent to air"
+      action: "earth captures air"
+
+    - id: "R_INTERACT_4"
+      condition: "air adjacent to water"
+      action: "air captures water"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "have all 4 elements on board simultaneously"
+
+description: |
+  Element Cycle uses rotating elements with rock-paper-scissors-style interactions. Elements
+  cycle when grouped (fire→water→earth→air→fire). Each element beats next in cycle. Win
+  by having all 4 elements on board. Balance element diversity with cycling dynamics.
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 16-20

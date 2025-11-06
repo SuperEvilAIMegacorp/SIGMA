@@ -1,0 +1,75 @@
+game_id: "stack_010"
+name: "Stack"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "height"
+          type: "integer"
+          description: "Position in stack (1 = bottom)"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "cell empty or has existing stack"
+      action: "place marker on top of stack"
+      effect: "marker height = current_stack_height + 1"
+
+  stack_limit:
+    - id: "R_LIMIT_1"
+      condition: "stack height > 4"
+      action: "stack collapses, all markers removed"
+
+  control:
+    - id: "R_CONTROL_1"
+      condition: "topmost marker determines cell control"
+      action: "cell controlled by top marker's color"
+
+  capture:
+    - id: "R_CAPTURE_1"
+      condition: "cell controlled by player AND surrounded orthogonally by 4 player-controlled cells"
+      action: "capture all enemy markers in surrounded cell's stack"
+
+  movement:
+    - id: "R_MOVE_1"
+      condition: "your marker is on top of stack"
+      action: "can move top marker to adjacent stack"
+      effect: "marker changes position"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "control 13+ cells"
+
+description: |
+  Stack allows vertical building. Place markers on empty cells or on top of existing stacks.
+  The top marker controls the cell. Stacks over height 4 collapse entirely. Can move your
+  top markers to adjacent stacks. Capture all markers in a stack by surrounding it with 4
+  controlled cells. First to control 13 cells wins.
+
+interactions:
+  - rules: ["R_PLACE_1", "R_CONTROL_1"]
+    type: "state_determination"
+  - rules: ["R_LIMIT_1", "R_PLACE_1"]
+    type: "constraint"
+  - rules: ["R_CONTROL_1", "R_CAPTURE_1"]
+    type: "enabling"
+
+induction_difficulty:
+  observable_patterns: "medium"
+  hidden_constraints: "high"
+  rule_interdependence: "high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 14-17

@@ -1,0 +1,76 @@
+game_id: "phase_shift_005"
+name: "Phase Shift"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    layers: 2
+    topology: "orthogonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "phase"
+          type: "enum"
+          values: ["solid", "ethereal"]
+        - name: "layer"
+          type: "integer"
+          range: "1-2"
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "cell empty in chosen layer"
+      action: "place marker in solid phase"
+
+  phase_shift:
+    - id: "R_SHIFT_1"
+      condition: "marker has 0 friendly neighbors in current layer"
+      action: "marker becomes ethereal"
+      effect: "can pass through enemy markers"
+
+    - id: "R_SHIFT_2"
+      condition: "ethereal marker has 2+ friendly neighbors"
+      action: "marker becomes solid"
+
+  interaction:
+    - id: "R_INTERACT_1"
+      condition: "solid markers in same cell (cross-layer)"
+      action: "both captured"
+      effect: "mutual annihilation"
+
+    - id: "R_INTERACT_2"
+      condition: "ethereal and solid in same cell"
+      action: "no interaction"
+      effect: "phase allows coexistence"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has no solid markers"
+
+description: |
+  Phase Shift uses a two-layer 5x5 board. Markers exist in solid or ethereal phase.
+  Isolated markers (0 friendly neighbors) become ethereal and can share cells with enemies.
+  Groups of 2+ become solid. Solid markers in same cell (across layers) mutually annihilate.
+  Win by eliminating all enemy solid markers.
+
+interactions:
+  - rules: ["R_SHIFT_1", "R_SHIFT_2"]
+    type: "state_toggle"
+  - rules: ["R_SHIFT_1", "R_INTERACT_1"]
+    type: "enabling"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "very_high"
+  rule_interdependence: "very_high"
+  edge_case_frequency: "high"
+
+minimal_scenarios_to_infer: 18-22

@@ -1,0 +1,16 @@
+game_id: "chain_bonus_075"
+name: "Chain Bonus"
+category: "accumulation"
+
+rules:
+  - id: "R1"
+    action: "Actions trigger bonuses in adjacent pieces"
+  - id: "R2"
+    action: "Chains can cascade through connected pieces"
+  - id: "R3"
+    action: "Each link in chain adds +2 to score"
+
+win:
+  condition: "Trigger chain of length 10+"
+
+minimal_scenarios: 14-17

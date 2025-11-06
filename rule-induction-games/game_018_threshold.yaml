@@ -1,0 +1,77 @@
+game_id: "threshold_018"
+name: "Threshold"
+category: "grid_game"
+
+state:
+  board:
+    type: "grid"
+    dimensions: "5x5"
+    topology: "orthogonal_and_diagonal"
+
+  pieces:
+    - name: "marker"
+      colors: ["red", "blue"]
+      properties:
+        - name: "activation_level"
+          type: "integer"
+          computed: true
+
+  players:
+    count: 2
+    turn_order: "alternating"
+
+rules:
+  placement:
+    - id: "R_PLACE_1"
+      condition: "empty cell"
+      action: "place marker with activation_level = 0"
+
+  activation:
+    - id: "R_ACTIVATE_1"
+      condition: "marker with 3+ friendly neighbors (all 8 directions)"
+      action: "activation_level = 1"
+
+    - id: "R_ACTIVATE_2"
+      condition: "marker with 5+ friendly neighbors"
+      action: "activation_level = 2"
+
+    - id: "R_ACTIVATE_3"
+      condition: "marker with 7+ friendly neighbors"
+      action: "activation_level = 3"
+
+  effects:
+    - id: "R_EFFECT_1"
+      condition: "activation_level = 1"
+      action: "marker cannot be captured by level 0 enemies"
+
+    - id: "R_EFFECT_2"
+      condition: "activation_level = 2"
+      action: "captures adjacent level 0 enemies"
+
+    - id: "R_EFFECT_3"
+      condition: "activation_level = 3"
+      action: "captures all adjacent enemies regardless of level"
+
+  win_conditions:
+    - id: "WIN_1"
+      condition: "opponent has < 3 markers"
+
+description: |
+  Threshold uses activation levels based on neighbor count. 3+ neighbors = level 1 (immune
+  to level 0). 5+ neighbors = level 2 (captures level 0). 7+ neighbors = level 3 (captures
+  any). Building dense clusters increases power. Must balance density vs spread. Win by
+  reducing opponent below 3 markers.
+
+interactions:
+  - rules: ["R_ACTIVATE_1", "R_ACTIVATE_2", "R_ACTIVATE_3"]
+    type: "threshold_cascade"
+  - rules: ["R_ACTIVATE_2", "R_EFFECT_2"]
+    type: "enabling"
+
+induction_difficulty:
+  observable_patterns: "high"
+  hidden_constraints: "high"
+  rule_interdependence: "medium"
+  edge_case_frequency: "medium"
+
+minimal_scenarios_to_infer: 16-19
